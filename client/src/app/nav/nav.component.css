@@ -1,0 +1,20 @@
+/* .filler {
+    flex: 1 1 auto;
+ } */
+ /* .form-container {
+   margin-left: 8px;
+ } */
+ .login-form {
+   min-width: 150px;
+   max-width: 500px;
+   width: 100%;
+ }
+ .gap {
+    margin-right: 10px;
+ }
+ /* .mat-form-field {
+   margin-left: 8px;
+   height: 20px;
+   width: 200px;
+   font-size: 16px;
+ } */

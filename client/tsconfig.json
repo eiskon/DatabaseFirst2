@@ -12,13 +12,9 @@
     "importHelpers": true,
     "skipLibCheck": true,
     "target": "es2015",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2018",
-      "dom"
-    ]
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["es2018", "dom"],
+    "types": ["jquery", "materialize-css"]
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

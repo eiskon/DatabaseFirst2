@@ -17,13 +17,21 @@ namespace api.Controllers
         {
             _context = context;
         }
-        // GET api/employees
+        // GET api/orders
         [HttpGet]
-        public async Task<IActionResult> GetCategories()
+        public async Task<IActionResult> GetOrders()
         {
            var orders = await _context.Orders.ToListAsync();
 
            return Ok(orders);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetOrder(int id)
+        {
+            var order = await _context.Orders.FirstOrDefaultAsync(x => x.OrderId == id);
+
+            return Ok(order);
         }
     }
 }

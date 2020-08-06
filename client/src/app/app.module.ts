@@ -4,34 +4,61 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { OrdersComponent } from './orders/orders.component';
+import { OrdersComponent } from './orders/orders-list/orders.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatCardModule, MatIconModule, MatToolbarModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatTableModule, MatPaginatorModule } from '@angular/material';
+import {
+   MatCardModule, MatIconModule, MatToolbarModule, MatButtonModule, MatFormFieldModule,
+   MatInputModule, MatTableModule, MatPaginatorModule, MatSelect, MatOption,
+   MatSelectModule, MatGridListModule, MatDialogModule, MatDialogContent
+} from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { NavComponent } from './nav/nav.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { FormsModule } from '@angular/forms';
+import { AuthService } from './_services/auth.service';
+import { OrdersService } from './_services/orders.service';
+import { CoreModule } from './_core/core.module';
+import { OrderEditDialogComponent } from './orders/order-edit-dialog/order-edit-dialog.component';
+import { OrdersModule } from './orders/orders.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    OrdersComponent
-  ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatCardModule,
-    MatIconModule,
-    MatTableModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    FlexLayoutModule,
-    MatPaginatorModule
-  ],
-  providers: [],
-  bootstrap: [
-    AppComponent
-  ]
+   declarations: [
+      AppComponent,
+      // OrdersComponent,
+      NavComponent
+   ],
+   imports: [
+      CoreModule,
+      OrdersModule,
+
+      BrowserModule,
+      HttpClientModule,
+      AppRoutingModule,
+      BrowserAnimationsModule,
+      MatCardModule,
+      MatIconModule,
+      MatTableModule,
+      MatToolbarModule,
+      MatButtonModule,
+      MatFormFieldModule,
+      MatInputModule,
+      FlexLayoutModule,
+      MatPaginatorModule,
+      LayoutModule,
+      MatSidenavModule,
+      MatListModule,
+      FormsModule,
+      MatSelectModule,
+      MatGridListModule
+   ],
+   providers: [
+      AuthService,
+      OrdersService
+   ],
+   bootstrap: [
+      AppComponent
+   ]
 })
 export class AppModule { }
