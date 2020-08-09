@@ -1,9 +1,9 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { MatDialogRef } from '@angular/material';
 import { OrdersService } from 'src/app/_services/orders.service';
 import { Orders } from '../../Model/order';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-order-edit-dialoge',
@@ -20,15 +20,10 @@ export class OrderEditDialogComponent implements OnInit {
 
   constructor(private ordersService: OrdersService,
               private activatedRoute: ActivatedRoute,
-    // private router: Router,
               public dialogRef: MatDialogRef<OrderEditDialogComponent>
-              // private fb: FormBuilder
               ) {
 
     this.orderId = this.activatedRoute.snapshot.params.orderId;
-    // console.log(this.orderId);
-    // this.customerId = this.data.customerId;
-    // console.log(data);
   }
 
   ngOnInit() {
@@ -36,9 +31,7 @@ export class OrderEditDialogComponent implements OnInit {
   }
   loadOrder(): void {
     this.ordersService.getOrder(this.orderId).subscribe((data: Orders) => {
-      // console.log(data);
       this.order = data;
-      // console.log(this.order);
     });
   }
   save() {}

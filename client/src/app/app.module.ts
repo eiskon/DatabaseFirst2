@@ -20,19 +20,20 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from './_services/auth.service';
 import { OrdersService } from './_services/orders.service';
 import { CoreModule } from './_core/core.module';
-import { OrderEditDialogComponent } from './orders/order-edit-dialog/order-edit-dialog.component';
 import { OrdersModule } from './orders/orders.module';
+import { HomeComponent } from './home/home.component';
+import { RegisterDialogComponent } from './register-dialog/register-dialog.component';
 
 @NgModule({
    declarations: [
       AppComponent,
-      // OrdersComponent,
-      NavComponent
+      NavComponent,
+      HomeComponent,
+      RegisterDialogComponent
    ],
    imports: [
       CoreModule,
       OrdersModule,
-
       BrowserModule,
       HttpClientModule,
       AppRoutingModule,
@@ -51,7 +52,8 @@ import { OrdersModule } from './orders/orders.module';
       MatListModule,
       FormsModule,
       MatSelectModule,
-      MatGridListModule
+      MatGridListModule,
+      MatDialogModule
    ],
    providers: [
       AuthService,
@@ -59,6 +61,9 @@ import { OrdersModule } from './orders/orders.module';
    ],
    bootstrap: [
       AppComponent
-   ]
+   ],
+  entryComponents: [
+    RegisterDialogComponent
+  ]
 })
 export class AppModule { }

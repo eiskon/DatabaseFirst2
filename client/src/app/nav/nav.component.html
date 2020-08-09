@@ -1,23 +1,26 @@
-<form
+<div *ngIf="loggedIn()">
+<mat-form-field  appearance="none">
+  <mat-label>Welcome User</mat-label>
+  <mat-select>
+    <mat-option>
+      <i class="material-icons">account_circle</i>
+      Edit Profile
+    </mat-option>
+    <mat-divider></mat-divider>
+    <mat-option (click)="logout()">
+      <i class="material-icons">logout</i>
+      Logout
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+</div>
+<form *ngIf="!loggedIn()"
   class="login-form"
   #loginForm="ngForm"
   (ngSubmit)="login()"
   class="form-container"
 >
-  <mat-form-field appearance="none">
-    <mat-label>Welcome User</mat-label>
-    <mat-select>
-      <mat-option>
-        <i class="material-icons">account_circle</i>
-        Edit Profile
-      </mat-option>
-      <!-- <mat-divider></mat-divider> -->
-      <mat-option>
-        <i class="material-icons">logout</i>
-        Logout
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+ 
 
   <mat-form-field appearance="none">
     <mat-label>Username</mat-label>
