@@ -4,7 +4,7 @@
       <button mat-raised-button color="accent" (click)="registerToggle()">Register</button>
     </div>
     <div *ngIf="registerMode">
-      <app-register-dialog></app-register-dialog>
+      <app-register-dialog (cancelRegister)="cancelRegisterMode($event)"></app-register-dialog>
     </div>
   </mat-grid-tile>
   <mat-grid-tile>

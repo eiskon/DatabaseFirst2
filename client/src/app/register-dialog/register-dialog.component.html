@@ -1,29 +1,57 @@
-<form fxLayout="column" #registerForm="ngForm" class="form-container" (ngSubmit)="register() ">
+<form
+  fxLayout="column"
+  #registerForm="ngForm"
+  class="form-container"
+  (ngSubmit)="register()"
+>
   <h2>Sing Up</h2>
-  <mat-dialog-content>
-    <mat-form-field appearance="none">
-      <mat-label>Username</mat-label>
-      <input
-        matInput
-        type="text"
-        name="username"
-        required
-        [(ngModel)]="model.username"
-      />
-    </mat-form-field>
-    <mat-form-field appearance="none">
-      <mat-label>Password</mat-label>
-      <input
-        matInput
-        type="text"
-        name="password"
-        required
-        [(ngModel)]="model.password"
-      />
-    </mat-form-field>
+  <mat-dialog-content fxLayout="column">
+    <div
+      class="input-row"
+      fxLayout="row"
+      fxLayout.lt-md="column"
+      fxLayoutGap="20px"
+      fxLayoutGap.lt-md="0px"
+    >
+      <mat-form-field appearance="none" fxFlex>
+        <mat-label>Lastname</mat-label>
+        <input
+          matInput
+          type="text"
+          name="Lastname"
+          required
+          [(ngModel)]="model.lastname"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="none" fxFlex>
+        <mat-label>Firstname</mat-label>
+        <input
+          matInput
+          type="text"
+          name="firstname"
+          required
+          [(ngModel)]="model.firstname"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="none" fxFlex>
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          type="password"
+          name="password"
+          required
+          [(ngModel)]="model.password"
+        />
+      </mat-form-field>
+    </div>
   </mat-dialog-content>
   <br />
-  <mat-dialog-actions>
+  <mat-dialog-actions
+    fxLayout="row"
+    fxLayout.lt-md="column"
+    fxLayoutGap="20px"
+    fxLayoutGap.lt-md="0px"
+  >
     <button mat-button class="mat-raised-button" type="submit">Register</button>
     <button mat-button class="mat-raised-button mat-primary" (click)="cancel()">
       Cancel
