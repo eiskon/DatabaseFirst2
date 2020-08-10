@@ -23,6 +23,7 @@ import { CoreModule } from './_core/core.module';
 import { OrdersModule } from './orders/orders.module';
 import { HomeComponent } from './home/home.component';
 import { RegisterDialogComponent } from './register-dialog/register-dialog.component';
+import { ErrorInterceptorProvider } from './_services/error.interceptor';
 
 @NgModule({
    declarations: [
@@ -57,7 +58,8 @@ import { RegisterDialogComponent } from './register-dialog/register-dialog.compo
    ],
    providers: [
       AuthService,
-      OrdersService
+      OrdersService,
+      ErrorInterceptorProvider
    ],
    bootstrap: [
       AppComponent

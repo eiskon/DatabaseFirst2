@@ -61,9 +61,9 @@ namespace api.Controllers
 
             var claims = new[]
             {
-                new Claim(ClaimTypes.NameIdentifier, employeeFromRepo.EmployeeId.ToString()),
-                new Claim(ClaimTypes.Name, employeeFromRepo.LastName)
-            };
+                    new Claim(ClaimTypes.NameIdentifier, employeeFromRepo.EmployeeId.ToString()),
+                    new Claim(ClaimTypes.Name, employeeFromRepo.LastName)
+                };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8
                 .GetBytes(_config.GetSection("AppSettings:Token").Value));
@@ -81,7 +81,8 @@ namespace api.Controllers
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return Ok(new {
+            return Ok(new
+            {
                 token = tokenHandler.WriteToken(token)
             });
         }

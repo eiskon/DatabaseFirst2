@@ -4,7 +4,7 @@
   class="form-container"
   (ngSubmit)="register()"
 >
-  <h2>Sing Up</h2>
+  <h2 fxLayoutAlign="center center">Sing Up</h2>
   <mat-dialog-content fxLayout="column">
     <div
       class="input-row"
@@ -33,6 +33,14 @@
           [(ngModel)]="model.firstname"
         />
       </mat-form-field>
+    </div>
+    <div
+      class="input-row"
+      fxLayout="column"
+      fxLayout.lt-md="column"
+      fxLayoutGap="20px"
+      fxLayoutGap.lt-md="0px"
+    >
       <mat-form-field appearance="none" fxFlex>
         <mat-label>Password</mat-label>
         <input
@@ -47,6 +55,7 @@
   </mat-dialog-content>
   <br />
   <mat-dialog-actions
+    fxLayoutAlign="center center"
     fxLayout="row"
     fxLayout.lt-md="column"
     fxLayoutGap="20px"
