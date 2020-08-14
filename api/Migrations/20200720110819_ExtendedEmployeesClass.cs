@@ -10,12 +10,12 @@ namespace api.Migrations
             migrationBuilder.AddColumn<byte[]>(
                 name: "PasswordHash",
                 table: "Employees",
-                nullable: true);
+                nullable: false);
 
             migrationBuilder.AddColumn<byte[]>(
                 name: "PasswordSalt",
                 table: "Employees",
-                nullable: true);
+                nullable: false);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

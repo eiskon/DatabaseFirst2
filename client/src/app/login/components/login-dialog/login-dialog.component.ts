@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../_services/auth.service';
-import { AlertifyService } from '../_services/alertify.service';
+import { AuthService } from 'src/app/_services/auth.service';
+import { AlertifyService } from 'src/app/_services/alertify.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-nav',
-  templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.css']
+  selector: 'app-login-dialog',
+  templateUrl: './login-dialog.component.html',
+  styleUrls: ['./login-dialog.component.css']
 })
-export class NavComponent implements OnInit {
+export class LoginDialogComponent implements OnInit {
   model: any = {};
 
   constructor(public authService: AuthService, private alertify: AlertifyService, private router: Router) { }
@@ -32,12 +32,7 @@ export class NavComponent implements OnInit {
   logout() {
     localStorage.removeItem('token');
     this.alertify.message('logged out');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/home']);
   }
 
-  navToLogin() {
-    this.router.navigate(['/login']);
-  }
- 
 }
-

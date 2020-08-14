@@ -1,17 +1,20 @@
+<div fxLayoutAlign="center center">
 <form
   fxLayout="column"
-  #registerForm="ngForm"
+  *ngIf="!loggedIn()"
+  #loginForm="ngForm"
+  (ngSubmit)="login()"
   class="form-container"
-  (ngSubmit)="register()"
 >
-  <h2 fxLayoutAlign="center center">Sing Up</h2>
+  <h2 fxLayoutAlign="center center">Log In</h2>
   <mat-dialog-content fxLayout="column">
     <div
       class="input-row"
       fxLayout="row"
       fxLayout.lt-md="column"
       fxLayoutGap="20px"
-      fxLayoutGap.lt-md="0px">
+      fxLayoutGap.lt-md="0px"
+    >
       <mat-form-field appearance="none" fxFlex>
         <mat-label>Lastname</mat-label>
         <input
@@ -20,16 +23,6 @@
           name="Lastname"
           required
           [(ngModel)]="model.lastname"
-        />
-      </mat-form-field>
-      <mat-form-field appearance="none" fxFlex>
-        <mat-label>Firstname</mat-label>
-        <input
-          matInput
-          type="text"
-          name="firstname"
-          required
-          [(ngModel)]="model.firstname"
         />
       </mat-form-field>
     </div>
@@ -60,9 +53,10 @@
     fxLayoutGap="20px"
     fxLayoutGap.lt-md="0px"
   >
-    <button mat-button class="mat-raised-button" type="submit">Register</button>
-    <button mat-button class="mat-raised-button mat-primary" (click)="cancel()">
+    <button mat-button [disabled]="!loginForm.valid" class="mat-raised-button" type="submit">   Ok   </button>
+    <!-- <button mat-button class="mat-raised-button mat-primary" (click)="cancel()">
       Cancel
-    </button>
+    </button> -->
   </mat-dialog-actions>
 </form>
+</div>

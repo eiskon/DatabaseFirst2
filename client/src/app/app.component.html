@@ -14,16 +14,16 @@
 </mat-toolbar>
 
 
-<mat-sidenav-container>
+<mat-sidenav-container> 
   <mat-sidenav #sidenav opened position="start">
     <mat-nav-list>
-      <h2><a mat-list-item [routerLink]="'/home'"> Home </a></h2>
-      <h2><a mat-list-item [routerLink]="'/orders'"> Orders </a></h2>
+      <h2><a mat-list-item routerLinkActive="active" [routerLink]="['/home']"> Home </a></h2>
+      <h2 *ngIf="loggedIn()"><a mat-list-item routerLinkActive="active" [routerLink]="['/orders']"> Orders </a></h2>
 
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <div style="height: 88vh;">
+    <div style="height: 88vh;"> 
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>

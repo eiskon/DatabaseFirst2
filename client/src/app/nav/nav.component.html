@@ -1,49 +1,21 @@
 <div *ngIf="loggedIn()">
-<mat-form-field  appearance="none">
-  <mat-label>Welcome User</mat-label>
-  <mat-select>
-    <mat-option>
-      <i class="material-icons">account_circle</i>
-      Edit Profile
-    </mat-option>
-    <mat-divider></mat-divider>
-    <mat-option (click)="logout()">
-      <i class="material-icons">logout</i>
-      Logout
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+  <mat-form-field appearance="none">
+    <mat-label
+      >Welcome {{ authService.decodeToken?.unique_name | titlecase }}</mat-label
+    >
+    <mat-select>
+      <mat-option>
+        <i class="material-icons">account_circle</i>
+        Edit Profile
+      </mat-option>
+      <mat-divider></mat-divider>
+      <mat-option (click)="logout()">
+        <i class="material-icons">logout</i>
+        Logout
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
-<form *ngIf="!loggedIn()"
-  class="login-form"
-  #loginForm="ngForm"
-  (ngSubmit)="login()"
-  class="form-container"
->
- 
-
-  <mat-form-field appearance="none">
-    <mat-label>Username</mat-label>
-    <input
-      matInput
-      type="text"
-      name="lastname"
-      required
-      [(ngModel)]="model.lastname"
-    />
-  </mat-form-field>
-
-  <mat-form-field appearance="none">
-    <mat-label>Password</mat-label>
-    <input
-      matInput
-      type="password"
-      name="password"
-      required
-      [(ngModel)]="model.password"
-    />
-  </mat-form-field>
-  <button [disabled]="!loginForm.valid" type="submit" mat-raised-button>
-    Login
-  </button>
-</form>
+<div *ngIf="!loggedIn()">
+  <button mat-button  (click)="navToLogin()" class="mat-raised-button" type="submit"><i class="material-icons">login</i>Login</button>
+</div>

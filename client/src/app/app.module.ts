@@ -24,6 +24,8 @@ import { OrdersModule } from './orders/orders.module';
 import { HomeComponent } from './home/home.component';
 import { RegisterDialogComponent } from './register-dialog/register-dialog.component';
 import { ErrorInterceptorProvider } from './_services/error.interceptor';
+import { AlertifyService } from './_services/alertify.service';
+import { LoginModule } from './login/login.module';
 
 @NgModule({
    declarations: [
@@ -35,6 +37,7 @@ import { ErrorInterceptorProvider } from './_services/error.interceptor';
    imports: [
       CoreModule,
       OrdersModule,
+      LoginModule,
       BrowserModule,
       HttpClientModule,
       AppRoutingModule,
@@ -59,6 +62,7 @@ import { ErrorInterceptorProvider } from './_services/error.interceptor';
    providers: [
       AuthService,
       OrdersService,
+      AlertifyService,
       ErrorInterceptorProvider
    ],
    bootstrap: [

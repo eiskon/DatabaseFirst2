@@ -1,19 +1,36 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { OrdersComponent } from './orders/orders-list/orders.component';
 import { HomeComponent } from './home/home.component';
+import { AuthGuard } from './_guards/auth.guard';
+import { LoginDialogComponent } from './login/components/login-dialog/login-dialog.component';
+
 
 const routes: Routes = [
   {
-    path: 'orders',
-    component: OrdersComponent,
-    // canActivate: [AuthGuard],
-    loadChildren: () => import('./orders/orders.module').then((x) => x.OrdersModule)
-  },
-  {
     path: 'home',
     component: HomeComponent,
-    // canActivate: [AuthGuard],
+  },
+  {
+    path: 'orders',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./orders/orders.module').then((x) => x.OrdersModule)
+  },
+  // {
+  //   path: '',
+  //   runGuardsAndResolvers: 'always',
+  //   canActivate: [AuthGuard],
+  //   loadChildren: () => import('./orders/orders.module').then((x) => x.OrdersModule)
+  // },
+  {
+    path: 'login',
+    component: LoginDialogComponent,
+    loadChildren: () => import('./login/login.module').then((x) => x.LoginModule)
+  },
+  {
+    path: '', redirectTo: '/home', pathMatch: 'full'
+  },
+  {
+    path: '**', redirectTo: '/home', pathMatch: 'full'
   }
 ];
 

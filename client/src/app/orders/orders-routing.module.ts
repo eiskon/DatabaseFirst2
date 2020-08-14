@@ -2,11 +2,12 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { OrdersComponent } from './orders-list/orders.component';
 import { OrderEditDialogComponent } from './order-edit-dialog/order-edit-dialog.component';
+import { AuthGuard } from '../_guards/auth.guard';
 
 
 const routes: Routes = [
   {
-    path: 'orders',
+    path: '',
     component: OrdersComponent
 },
 {
