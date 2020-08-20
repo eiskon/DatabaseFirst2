@@ -21,9 +21,11 @@ export class LoginDialogComponent implements OnInit {
       this.alertify.success('Logged in successfully');
     }, error => {
       this.alertify.error(error);
-    }, () => {
-      this.router.navigate(['/orders']);
-    });
+    }
+    // , () => {
+    //   this.router.navigate(['/orders']);
+    // }
+    );
   }
   loggedIn() {
     return this.authService.loggedIn();

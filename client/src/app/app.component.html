@@ -17,8 +17,9 @@
 <mat-sidenav-container> 
   <mat-sidenav #sidenav opened position="start">
     <mat-nav-list>
-      <h2><a mat-list-item routerLinkActive="active" [routerLink]="['/home']"> Home </a></h2>
-      <h2 *ngIf="loggedIn()"><a mat-list-item routerLinkActive="active" [routerLink]="['/orders']"> Orders </a></h2>
+      <h2><a mat-list-item routerLinkActive="active" [routerLink]="['/home']" (click)="sidenav.toggle()"> Home </a></h2>
+      <h2 *ngIf="loggedIn()"><a mat-list-item routerLinkActive="active" [routerLink]="['/orders']" (click)="sidenav.toggle()"> Orders </a></h2>
+      <h2 *ngIf="loggedIn()"><a mat-list-item routerLinkActive="active" [routerLink]="['/employee']" (click)="sidenav.toggle()"> Employees </a></h2>
 
     </mat-nav-list>
   </mat-sidenav>
@@ -28,29 +29,3 @@
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
-
-<!-- <mat-sidenav-container fullscreen>
-  <mat-sidenav mode="side" #sidenav opened position="start">
-    <mat-nav-list>
-
-      <a mat-list-item [routerLink]="'/orders'"> Accounts </a>
-      <a mat-list-item (click)="sidenav.toggle()" href="" mat-list-item>Close</a>
-
-    </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <button mat-icon-button (click)="sidenav.toggle()">
-        <mat-icon>menu</mat-icon>
-      </button>
-      My Application
-      <span class="toolbar-spacer"></span>
-      <app-nav></app-nav>  
-    </mat-toolbar>
-    <div class="main-content">
-      
-    </div>
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
-</mat-sidenav-container> -->
-

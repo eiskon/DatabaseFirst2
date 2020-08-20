@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using api.Model;
 
 namespace api.Dtos
 {
@@ -18,5 +20,6 @@ namespace api.Dtos
         public string ShipRegion { get; set; }
         public string ShipPostalCode { get; set; }
         public string ShipCountry { get; set; }
+    
     }
 }

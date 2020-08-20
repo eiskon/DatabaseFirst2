@@ -25,7 +25,8 @@ namespace api.Data
 
         public async Task<IEnumerable<Employees>> GetEmployees()
         {
-            var employees = await _context.Employees.Include(o => o.Orders).ToListAsync();
+            var employees = await _context.Employees
+                .Include(o => o.Orders).ToListAsync();
             // var employees = await _context.Employees.FromSqlRaw("select e.Address, e.EmployeeID, e.FirstName, e.LastName, e.BirthDate, o.OrderID from Employees e inner join Orders o on o.EmployeeID = e.EmployeeID order by e.EmployeeID").ToListAsync();
 
             return employees;

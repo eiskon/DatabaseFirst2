@@ -1,33 +1,55 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { Orders } from '../Model/order';
+import { Order } from '../_models/order';
 import { catchError } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+import { DataShareService } from './data-share.service';
+
+// const httpOptions = {
+//   headers: new HttpHeaders({
+//     Authorization: `Bearer ${localStorage.getItem('token')}`
+//   })
+// };
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrdersService {
-  private api = 'http://localhost:5000/api';
+  baseUrl = environment.apiUrl;
+  // ordersFromEmployee: Orders[];
 
-  private _orders = new BehaviorSubject<Orders[]>([]);
-  private dataStore: { orders: Orders[] } = { orders: [] };
+  private _orders = new BehaviorSubject<Order[]>([]);
+  private dataStore: { orders: Order[] } = { orders: [] };
   readonly orders = this._orders.asObservable();
 
-  constructor(private http: HttpClient) { }
-
-  public getOrders() {
-    this.http.get<Orders[]>(`${this.api}/orders`).subscribe(
-      res => {
-        this.dataStore.orders = res;
-        this._orders.next(Object.assign({}, this.dataStore).orders);
-      },
-      catchError(this.errorHandler)
-    );
+  get refreshNeeded$() {
+    return this._orders;
   }
 
-  public getOrder(id: number): Observable<Orders> {
-    return this.http.get<Orders>(`${this.api}/orders/${id}`);
+  constructor(private http: HttpClient) {
+ 
+  }
+
+  public getOrders() {
+      this.http.get<Order[]>(`${this.baseUrl}orders`).subscribe(
+        res => {
+          this.dataStore.orders = res;
+          this._orders.next(Object.assign({}, this.dataStore).orders);
+        },
+        catchError(this.errorHandler)
+      );
+
+  }
+  // public getOrdersFromEmployee() {
+  //   console.log(this.ordersFromEmployee);
+  // }
+  // getEmployees(): Observable<Employe[]> {
+  //   return this.http.get<Employe[]>(`${this.baseUrl}employees`, httpOptions);
+  // }
+
+  public getOrder(id: number): Observable<Order> {
+    return this.http.get<Order>(`${this.baseUrl}orders/${id}`);
   }
 
   private errorHandler(error: HttpErrorResponse): Observable<any> {

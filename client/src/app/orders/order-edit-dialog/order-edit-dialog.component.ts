@@ -19,9 +19,9 @@ export class OrderEditDialogComponent implements OnInit {
   form: FormGroup;
 
   constructor(private ordersService: OrdersService,
-              private activatedRoute: ActivatedRoute,
-              public dialogRef: MatDialogRef<OrderEditDialogComponent>
-              ) {
+    private activatedRoute: ActivatedRoute,
+    public dialogRef: MatDialogRef<OrderEditDialogComponent>
+  ) {
 
     this.orderId = this.activatedRoute.snapshot.params.orderId;
   }
@@ -29,12 +29,14 @@ export class OrderEditDialogComponent implements OnInit {
   ngOnInit() {
     this.loadOrder();
   }
+
   loadOrder(): void {
     this.ordersService.getOrder(this.orderId).subscribe((data: Orders) => {
       this.order = data;
     });
   }
-  save() {}
+
+  save() { }
 
   close() {
     this.dialogRef.close();

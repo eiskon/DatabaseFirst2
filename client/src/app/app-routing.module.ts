@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { LoginDialogComponent } from './login/components/login-dialog/login-dialog.component';
+import { EmployeeDetailResolver } from './_resolvers/employee-detail.resolver';
 
 
 const routes: Routes = [
@@ -14,6 +15,11 @@ const routes: Routes = [
     path: 'orders',
     canActivate: [AuthGuard],
     loadChildren: () => import('./orders/orders.module').then((x) => x.OrdersModule)
+  },
+  {
+    path: 'employee',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./employee/employee.module').then((x) => x.EmployeesModule)
   },
   // {
   //   path: '',

@@ -1,0 +1,86 @@
+
+  <form #loginForm="ngForm">
+    <h2 mat-dialog-title fxLayoutAlign="center center">Employe details</h2>
+    <mat-dialog-content fxLayout="row">
+      <div fxLayout="row wrap" fxFlexFill fxLayoutAlign="start start" fxLayoutGap="20px grid">
+        <div fxFlex="20">
+          <mat-form-field appearance="none">
+            <mat-label>Title of courtesy</mat-label>
+            <input disabled matInput type="text" [ngModel]="employee?.titleOfCourtesy" name="titleOfCourtesy">
+          </mat-form-field>
+        </div>
+        <div fxFlex="40">
+          <mat-form-field appearance="none">
+            <mat-label>Lastname</mat-label>
+            <input disabled matInput type="text" [ngModel]="employee?.lastName" name="lastName">
+          </mat-form-field>
+        </div>
+        <div fxFlex="40">
+          <mat-form-field appearance="none">
+            <mat-label>Firstname</mat-label>
+            <input disabled matInput type="text" [ngModel]="employee?.firstName" name="firstName">
+          </mat-form-field>
+        </div>
+        <div fxFlex="33.3">
+          <mat-form-field appearance="none">
+            <mat-label>Hire date</mat-label>
+            <input disabled matInput type="text" [ngModel]="employee?.hireDate" name="hireDate">
+          </mat-form-field>
+        </div>
+        <div fxFlex="16.65">
+          <mat-form-field appearance="none">
+            <mat-label>City</mat-label>
+            <input disabled matInput type="text" [ngModel]="employee?.city" name="city">
+          </mat-form-field>
+        </div>
+        <div fxFlex="16.65">
+          <mat-form-field appearance="none">
+            <mat-label>Ragion</mat-label>
+            <input disabled matInput type="text" [ngModel]="employee?.region" name="region">
+          </mat-form-field>
+        </div>
+        <div fxFlex="16.65">
+          <mat-form-field appearance="none">
+            <mat-label>Postal code</mat-label>
+            <input disabled matInput type="text" [ngModel]="employee?.postalCode" name="postalCode">
+          </mat-form-field>
+        </div>
+        <div fxFlex="16.65">
+          <mat-form-field appearance="none">
+            <mat-label>Country</mat-label>
+            <input disabled matInput type="text" [ngModel]="employee?.country" name="country">
+          </mat-form-field>
+        </div>
+        <div fxFlex="16.65">
+          <mat-form-field appearance="none">
+            <mat-label>Home phone</mat-label>
+            <input disabled matInput type="text" [ngModel]="employee?.homePhone" name="homePhone">
+          </mat-form-field>
+        </div>
+        <div fxFlex="30">
+          <mat-form-field appearance="none">
+            <mat-label>Address</mat-label>
+            <textarea disabled matInput [ngModel]="employee?.address" name="address"></textarea>
+          </mat-form-field>
+        </div>
+        <div fxFlex="53.35">
+          <mat-form-field appearance="none">
+            <mat-label>Notes</mat-label>
+            <textarea disabled matInput [ngModel]="employee?.notes" name="notes"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-dialog-content>
+  
+    <mat-dialog-actions
+      fxLayoutAlign="center center"
+      fxLayout="row"
+      fxLayout.lt-md="column"
+      fxLayoutGap="20px"
+      fxLayoutGap.lt-md="0px"
+    >
+      <button mat-button class="mat-raised-button" (click)="close()">Close</button>
+      <button mat-button class="mat-raised-button" [routerLink]="['/orders/']" (click)="passData(employee?.orders)">Show his orders</button>
+    </mat-dialog-actions>
+  </form>
+  

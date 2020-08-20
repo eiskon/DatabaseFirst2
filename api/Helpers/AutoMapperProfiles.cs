@@ -13,7 +13,9 @@ namespace api.Helpers
                 .ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.BirthDate.CalculateAge()));
             CreateMap<Employees, EmployeeForDetailedDto>()
                 .ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.BirthDate.CalculateAge()));
+            CreateMap<Orders, OrdersForListDto>();
             CreateMap<Orders, OrdersForDetailedDto>();
+            CreateMap<Employees, EmployeesForOrderListDto>();
         }
     }
 }

@@ -43,6 +43,7 @@ namespace api
             services.AddAutoMapper(typeof(EmployeesRepository).Assembly);
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IEmployeesRepository, EmployeesRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {

@@ -34,6 +34,7 @@ namespace api.Controllers
 
             return Ok(employeesToReturn);
         }
+        
         [HttpGet("{id}")]
         public async Task<IActionResult> GetEmployee(int id)
         {

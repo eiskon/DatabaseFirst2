@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { JwtModule } from '@auth0/angular-jwt';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,7 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
    MatCardModule, MatIconModule, MatToolbarModule, MatButtonModule, MatFormFieldModule,
    MatInputModule, MatTableModule, MatPaginatorModule, MatSelect, MatOption,
-   MatSelectModule, MatGridListModule, MatDialogModule, MatDialogContent
+   MatSelectModule, MatGridListModule, MatDialogModule, MatDialogContent, MatSortModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NavComponent } from './nav/nav.component';
@@ -26,6 +27,13 @@ import { RegisterDialogComponent } from './register-dialog/register-dialog.compo
 import { ErrorInterceptorProvider } from './_services/error.interceptor';
 import { AlertifyService } from './_services/alertify.service';
 import { LoginModule } from './login/login.module';
+import { EmployeesModule } from './employee/employee.module';
+import { EmployeeDetailResolver } from './_resolvers/employee-detail.resolver';
+import { EmployeeListResolver } from './_resolvers/employee-list.resolver';
+
+export function getToken() {
+   return localStorage.getItem('token');
+}
 
 @NgModule({
    declarations: [
@@ -37,6 +45,7 @@ import { LoginModule } from './login/login.module';
    imports: [
       CoreModule,
       OrdersModule,
+      EmployeesModule,
       LoginModule,
       BrowserModule,
       HttpClientModule,
@@ -57,19 +66,28 @@ import { LoginModule } from './login/login.module';
       FormsModule,
       MatSelectModule,
       MatGridListModule,
-      MatDialogModule
+      MatDialogModule,
+      MatSortModule,
+      JwtModule.forRoot({
+         config: {
+            tokenGetter: getToken,
+            allowedDomains: ['localhost:5000'],
+            disallowedRoutes: ['localhost:5000/api/auth']
+         }
+      })
    ],
    providers: [
       AuthService,
       OrdersService,
       AlertifyService,
+      EmployeeListResolver,
       ErrorInterceptorProvider
    ],
    bootstrap: [
       AppComponent
    ],
-  entryComponents: [
-    RegisterDialogComponent
-  ]
+   entryComponents: [
+      RegisterDialogComponent
+   ]
 })
 export class AppModule { }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using api.Model;
 using Microsoft.EntityFrameworkCore;
@@ -13,16 +14,42 @@ namespace api.Data
             this._context = context;
         }
 
-        Task<Orders> IOrderRepository.GetOrder(int id)
+        public void Add<T>(T entity) where T : class
         {
-            throw new System.NotImplementedException();
+            _context.Add(entity);
         }
 
-        public async Task<List<Orders>> GetOrders()
+        public void Delete<T>(T entity) where T : class
         {
-            List<Orders> orders = await _context.Orders.ToListAsync();
+            _context.Remove(entity);
+        }
 
-           return orders;
+        public async Task<Orders> GetOrder(int id)
+        {
+             var order = await _context.Orders
+                .FirstOrDefaultAsync(o => o.OrderId == id);
+
+            return order;
+        }
+
+        public async Task<IEnumerable<Orders>> GetOrders()
+        {
+            var orders = await _context.Orders
+                .Include(e => e.Employee).ToListAsync();
+
+            return orders;
+        }
+
+        // public async Task<IEnumerable<Orders>> GetOrdersFromEmployee(int employeeId)
+        // {
+        //     var ordersFromEmployee = await _context.Orders.Where(o => o.EmployeeId == employeeId).ToListAsync();
+
+        //     return ordersFromEmployee;
+        // }
+
+        public async Task<bool> SaveAll()
+        {
+            return await _context.SaveChangesAsync() > 0;
         }
     }
 }
