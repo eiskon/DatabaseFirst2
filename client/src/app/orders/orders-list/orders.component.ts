@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { Orders } from '../../Model/order';
+import { Order } from 'src/app/_models/order';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { OrderEditDialogComponent } from '../order-edit-dialog/order-edit-dialog.component';
 import { EmployeeDetailsDialogComponent } from 'src/app/employee/employee-details-dialog/employee-details-dialog.component';
@@ -16,9 +16,9 @@ import { DataShareService } from 'src/app/_services/data-share.service';
   styleUrls: ['./orders.component.css'],
 })
 export class OrdersComponent implements OnInit {
-  ordersFromEmployee: Orders[];
-  orders$: Observable<Orders[]>;
-  public dataSource: MatTableDataSource<Orders>;
+  ordersFromEmployee: Order[];
+  orders$: Observable<Order[]>;
+  public dataSource: MatTableDataSource<Order>;
   displayedColumns: string[] = [
     'orderId',
     'orderDate',
@@ -29,8 +29,8 @@ export class OrdersComponent implements OnInit {
   ];
 
   constructor(private ordersService: OrdersService,
-    public dialog: MatDialog,
-    private dataShareService: DataShareService) { }
+              public dialog: MatDialog,
+              private dataShareService: DataShareService) { }
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -38,16 +38,19 @@ export class OrdersComponent implements OnInit {
   ngOnInit() {
     this.ordersService.refreshNeeded$.subscribe((data) => {
       if (data.length > 0) {
+        console.log('refresh');
         this.refreshOrders();
       } else {
+        console.log('load');
         this.loadOrders();
       }
     });
 
 
-    this.dataShareService.shareDataSubject.subscribe(receiveddata => {
-      this.ordersFromEmployee = receiveddata;
+    this.dataShareService.shareDataSubject.subscribe(receivedData => {
+      this.ordersFromEmployee = receivedData;
       if (this.ordersFromEmployee.length > 0) {
+        this.clearDataSource();
         this.displayedColumns = [
           'orderId',
           'orderDate',
@@ -55,14 +58,13 @@ export class OrdersComponent implements OnInit {
           'shipAddress',
           'actions'
         ];
-        this.dataSource = new MatTableDataSource<Orders>(this.ordersFromEmployee);
+        this.dataSource = new MatTableDataSource<Order>(this.ordersFromEmployee);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
       } else {
         this.ordersService.refreshNeeded$.subscribe(() => {
           this.loadOrders();
         });
-        this.loadOrders();
       }
     });
 
@@ -73,7 +75,7 @@ export class OrdersComponent implements OnInit {
     this.ordersService.getOrders();
     this.orders$ = this.ordersService.orders;
     this.orders$.subscribe(res => {
-      this.dataSource = new MatTableDataSource<Orders>(res);
+      this.dataSource = new MatTableDataSource<Order>(res);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
     });
@@ -81,7 +83,7 @@ export class OrdersComponent implements OnInit {
 
   refreshOrders() {
     this.ordersService.refreshNeeded$.subscribe((res) => {
-      this.dataSource = new MatTableDataSource<Orders>(res);
+      this.dataSource = new MatTableDataSource<Order>(res);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       this.displayedColumns = [

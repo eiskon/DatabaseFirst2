@@ -17,7 +17,6 @@ import { DataShareService } from './data-share.service';
 })
 export class OrdersService {
   baseUrl = environment.apiUrl;
-  // ordersFromEmployee: Orders[];
 
   private _orders = new BehaviorSubject<Order[]>([]);
   private dataStore: { orders: Order[] } = { orders: [] };
@@ -27,18 +26,16 @@ export class OrdersService {
     return this._orders;
   }
 
-  constructor(private http: HttpClient) {
- 
-  }
+  constructor(private http: HttpClient) {}
 
   public getOrders() {
-      this.http.get<Order[]>(`${this.baseUrl}orders`).subscribe(
-        res => {
-          this.dataStore.orders = res;
-          this._orders.next(Object.assign({}, this.dataStore).orders);
-        },
-        catchError(this.errorHandler)
-      );
+    this.http.get<Order[]>(`${this.baseUrl}orders`).subscribe(
+      res => {
+        this.dataStore.orders = res;
+        this._orders.next(Object.assign({}, this.dataStore).orders);
+      },
+      catchError(this.errorHandler)
+    );
 
   }
   // public getOrdersFromEmployee() {

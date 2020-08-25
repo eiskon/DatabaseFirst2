@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeesService } from 'src/app/_services/employees.service';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { DataShareService } from 'src/app/_services/data-share.service';
-import { Orders } from 'src/app/Model/order';
+import { Order } from '../../_models/order';
 
 @Component({
   selector: 'app-employee-details-dialog',
@@ -24,17 +24,10 @@ export class EmployeeDetailsDialogComponent implements OnInit {
               public dialogRef: MatDialogRef<EmployeeDetailsDialogComponent>
   ) {
     this.employeeId = this.activatedRoute.snapshot.params.employeeId;
-    // this.employee = this.activatedRoute.snapshot.data.employee;
   }
 
   ngOnInit() {
-    // console.log(this.activatedRoute.snapshot.data.employee);
     this.loadEmployee();
-    // this.activatedRoute.snapshot.data.subscribe(data => {
-    //   console.log(data);
-    //   this.employee = data.employee;
-    // });
-    // this.employee = this.activatedRoute.snapshot.data.employee;
   }
 
   loadEmployee(): void {
@@ -51,7 +44,7 @@ export class EmployeeDetailsDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  passData(orders: Orders[]){
+  passData(orders: Order[]){
     this.dataShareService.sendDataToOtherComponent(orders);
     this.close();
   }

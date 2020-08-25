@@ -8,7 +8,7 @@ import { EmployeeDetailResolver } from '../_resolvers/employee-detail.resolver';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'orders',
     component: OrdersComponent
   },
   {

@@ -1,19 +1,22 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { EmploeesListComponent } from './emploee-list/emploee-list.component';
-import { EmployeeDetailsDialogComponent } from './employee-details-dialog/employee-details-dialog.component';
-import { EmployeeDetailResolver } from '../_resolvers/employee-detail.resolver';
 import { EmployeeListResolver } from '../_resolvers/employee-list.resolver';
+import { EmployeeDetailsDialogComponent } from './employee-details-dialog/employee-details-dialog.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'employee',
     component: EmploeesListComponent, resolve: {employees: EmployeeListResolver}
   },
   {
-    path: 'employees/:employeeId',
+    path: 'employee/:employeeId',
     component: EmployeeDetailsDialogComponent
   }
+  // {
+  //   path: 'employee/edit/:employeeId',
+  //   component: EmployeeEditComponent
+  // }
 ];
 
 @NgModule({

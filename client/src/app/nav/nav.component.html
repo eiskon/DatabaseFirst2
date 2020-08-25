@@ -4,7 +4,7 @@
       >Welcome {{ authService.decodeToken?.unique_name | titlecase }}</mat-label
     >
     <mat-select>
-      <mat-option>
+      <mat-option (click)="openDialogEmployeeEdit(authService.decodeToken.nameid)">
         <i class="material-icons">account_circle</i>
         Edit Profile
       </mat-option>

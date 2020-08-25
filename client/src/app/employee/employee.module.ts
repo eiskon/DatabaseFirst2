@@ -3,16 +3,19 @@ import { CommonModule } from '@angular/common';
 import { EmploeesListComponent } from './emploee-list/emploee-list.component';
 
 import { EmployeesRoutingModule } from './employee-routing.module';
-import { MatCardModule } from '@angular/material';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatCardModule, MatDialogModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LayoutModule } from '@angular/cdk/layout';
-import { EmployeeDetailResolver } from '../_resolvers/employee-detail.resolver';
 import { EmployeeListResolver } from '../_resolvers/employee-list.resolver';
+import { MatFormFieldModule, MatInputModule } from '@angular/material';
+import {MatButtonModule} from '@angular/material/button';
+import { FormsModule } from '@angular/forms';
+import { EmployeeEditDialogComponent } from '../employee/employee-edit-dialog/employee-edit-dialog.component'
 
 @NgModule({
   declarations: [
-    EmploeesListComponent
+    EmploeesListComponent,
+    EmployeeEditDialogComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +24,14 @@ import { EmployeeListResolver } from '../_resolvers/employee-list.resolver';
     FlexLayoutModule,
     MatCardModule,
     LayoutModule,
-    MatFormFieldModule
+    FormsModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatDialogModule,
+    MatButtonModule
+  ],
+  entryComponents: [
+    EmployeeEditDialogComponent
   ],
   providers: [
     EmployeeListResolver

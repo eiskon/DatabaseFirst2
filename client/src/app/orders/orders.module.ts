@@ -10,6 +10,7 @@ import { EmployeeDetailsDialogComponent } from '../employee/employee-details-dia
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { EmployeeDetailResolver } from '../_resolvers/employee-detail.resolver';
+import { EmployeeEditDialogComponent } from '../employee/employee-edit-dialog/employee-edit-dialog.component';
 
 @NgModule({
   imports: [

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialogRef } from '@angular/material';
 import { OrdersService } from 'src/app/_services/orders.service';
-import { Orders } from '../../Model/order';
+import { Order } from 'src/app/_models/order';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -11,7 +11,7 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./order-edit-dialog.component.css']
 })
 export class OrderEditDialogComponent implements OnInit {
-  order: Orders;
+  order: Order;
   orderId: number;
   customerId: string;
   isLoading = true;
@@ -31,7 +31,7 @@ export class OrderEditDialogComponent implements OnInit {
   }
 
   loadOrder(): void {
-    this.ordersService.getOrder(this.orderId).subscribe((data: Orders) => {
+    this.ordersService.getOrder(this.orderId).subscribe((data: Order) => {
       this.order = data;
     });
   }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using api.Model;
@@ -43,6 +44,22 @@ namespace api.Controllers
             var employeeToReturn = _mapper.Map<EmployeeForDetailedDto>(employee);
 
             return Ok(employeeToReturn);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateEmployee(int id, EmployeeForUpdateDto employeeForUpdateDto) {
+            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            var employeeFromRepo = await _repo.GetEmployee(id);
+
+            _mapper.Map(employeeForUpdateDto, employeeFromRepo);
+
+            if (await _repo.SaveAll())
+                return NoContent();
+
+            throw new Exception($"Updating employee {id} faled on save");
+
         }
     }
 }

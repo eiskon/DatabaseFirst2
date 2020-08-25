@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+
 import { EmployeesService } from '../../_services/employees.service';
 import { Employe } from 'src/app/_models/employe';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { ActivatedRoute } from '@angular/router';
+import { EmployeeEditDialogComponent } from '../employee-edit-dialog/employee-edit-dialog.component';
+import { AuthService } from 'src/app/_services/auth.service';
 
 @Component({
   selector: 'app-emploee-list',
@@ -12,7 +16,8 @@ import { ActivatedRoute } from '@angular/router';
 export class EmploeesListComponent implements OnInit {
   employees: Employe[];
 
-  constructor(private employeeService: EmployeesService, private alertify: AlertifyService, private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, public authService: AuthService,
+    public dialog: MatDialog) { }
 
   ngOnInit() {
     this.route.data.subscribe(data => {
@@ -20,13 +25,25 @@ export class EmploeesListComponent implements OnInit {
     });
   }
 
-  // loadEmployees() {
-  //   this.employeeService.getEmployees().subscribe((employees: Employe[]) => {
-  //     this.employees = employees;
-  //     // console.log(this.employees);
-  //   }, error => {
-  //     this.alertify.error(error);
-  //   });
-  // }
+  openDialogEmployeeEdit(id: number) {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    dialogConfig.direction = 'rtl';
+    const dialogRef = this.dialog.open(EmployeeEditDialogComponent, {
+      width: '1000px',
+      disableClose: false,
+      position: { top: '1%' },
+      maxHeight: '96vh',
+      panelClass: ['mat-dialog-overflow', 'dialog-0-p']
+    });
+
+    dialogRef.componentInstance.employeeId = id;
+  }
+
+  loggedIn() {
+    return this.authService.loggedIn();
+  }
 
 }

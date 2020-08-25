@@ -8,6 +8,10 @@ import { EmployeeDetailResolver } from './_resolvers/employee-detail.resolver';
 
 const routes: Routes = [
   {
+    path: '',
+    component: HomeComponent,
+  },
+  {
     path: 'home',
     component: HomeComponent,
   },
@@ -32,9 +36,9 @@ const routes: Routes = [
     component: LoginDialogComponent,
     loadChildren: () => import('./login/login.module').then((x) => x.LoginModule)
   },
-  {
-    path: '', redirectTo: '/home', pathMatch: 'full'
-  },
+  // {
+  //   path: '', redirectTo: '/home', pathMatch: 'full'
+  // },
   {
     path: '**', redirectTo: '/home', pathMatch: 'full'
   }

@@ -16,6 +16,7 @@ namespace api.Helpers
             CreateMap<Orders, OrdersForListDto>();
             CreateMap<Orders, OrdersForDetailedDto>();
             CreateMap<Employees, EmployeesForOrderListDto>();
+            CreateMap<EmployeeForUpdateDto, Employees>();
         }
     }
 }

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { AlertifyService } from '../_services/alertify.service';
 import { Router } from '@angular/router';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { EmployeeEditDialogComponent } from '../employee/employee-edit-dialog/employee-edit-dialog.component';
 
 @Component({
   selector: 'app-nav',
@@ -10,10 +12,13 @@ import { Router } from '@angular/router';
 })
 export class NavComponent implements OnInit {
   model: any = {};
+  userId: number;
 
-  constructor(public authService: AuthService, private alertify: AlertifyService, private router: Router) { }
+  constructor(public authService: AuthService, private alertify: AlertifyService, private router: Router,
+    public dialog: MatDialog) {}
 
   ngOnInit() {
+    this.userId = this.authService.decodeToken.nameid;
   }
 
   login() {
@@ -22,9 +27,6 @@ export class NavComponent implements OnInit {
     }, error => {
       this.alertify.error(error);
     });
-    // , () => {
-    //   this.router.navigate(['/orders']);
-    // }
   }
   loggedIn() {
     return this.authService.loggedIn();
@@ -39,6 +41,21 @@ export class NavComponent implements OnInit {
   navToLogin() {
     this.router.navigate(['/login']);
   }
- 
-}
 
+  openDialogEmployeeEdit(id: number) {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    dialogConfig.direction = 'rtl';
+    const dialogRef = this.dialog.open(EmployeeEditDialogComponent, {
+      width: '1000px',
+      disableClose: false,
+      position: { top: '1%' },
+      maxHeight: '96vh',
+      panelClass: ['mat-dialog-overflow', 'dialog-0-p']
+    });
+
+    dialogRef.componentInstance.employeeId = id;
+  }
+}

@@ -30,6 +30,8 @@ import { LoginModule } from './login/login.module';
 import { EmployeesModule } from './employee/employee.module';
 import { EmployeeDetailResolver } from './_resolvers/employee-detail.resolver';
 import { EmployeeListResolver } from './_resolvers/employee-list.resolver';
+import { EmployeeEditDialogComponent } from './employee/employee-edit-dialog/employee-edit-dialog.component';
+import { PreventUnsavedCanges } from './_guards/prevent-unsaved-changes.guard';
 
 export function getToken() {
    return localStorage.getItem('token');
@@ -43,11 +45,11 @@ export function getToken() {
       RegisterDialogComponent
    ],
    imports: [
+      BrowserModule,
       CoreModule,
       OrdersModule,
       EmployeesModule,
       LoginModule,
-      BrowserModule,
       HttpClientModule,
       AppRoutingModule,
       BrowserAnimationsModule,
@@ -81,13 +83,15 @@ export function getToken() {
       OrdersService,
       AlertifyService,
       EmployeeListResolver,
+      PreventUnsavedCanges,
       ErrorInterceptorProvider
    ],
    bootstrap: [
       AppComponent
    ],
    entryComponents: [
-      RegisterDialogComponent
+      RegisterDialogComponent,
+      EmployeeEditDialogComponent
    ]
 })
 export class AppModule { }

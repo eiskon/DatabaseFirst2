@@ -20,4 +20,7 @@ export class EmployeesService {
     return this.http.get<Employe>(`${this.baseUrl}employees/${id}`);
   }
 
+  updateEmployee(id: number, employee: Employe) {
+    return this.http.put(`${this.baseUrl}employees/${id}`, employee);
+  }
 }
