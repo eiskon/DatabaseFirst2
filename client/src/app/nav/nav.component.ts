@@ -18,7 +18,7 @@ export class NavComponent implements OnInit {
     public dialog: MatDialog) {}
 
   ngOnInit() {
-    this.userId = this.authService.decodeToken.nameid;
+    // this.userId = this.authService.decodeToken.nameid;
   }
 
   login() {

@@ -23,8 +23,8 @@
         </div>
         <div fxFlex="33.3">
           <mat-form-field appearance="none">
-            <mat-label>Hire date</mat-label>
-            <input disabled matInput type="text" [ngModel]="employee?.hireDate" name="hireDate">
+            <mat-label>Birthdate</mat-label>
+            <input disabled matInput type="text" [ngModel]="employee?.birthDate | germanDateFormat" name="hireDate">
           </mat-form-field>
         </div>
         <div fxFlex="16.65">

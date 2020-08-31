@@ -56,6 +56,7 @@ namespace api
                     ValidateAudience = false
                 };
             });
+            services.AddScoped<LogEmployeeUpdate>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

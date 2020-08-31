@@ -16,5 +16,6 @@ namespace api.Dtos
         public string PostalCode { get; set; }
         public string Country { get; set; }
         public string HomePhone { get; set; }
+        public DateTime LastUpdate { get; set; }
     }
 }

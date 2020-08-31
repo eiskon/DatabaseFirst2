@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using api.Helpers;
 using api.Model;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,12 +24,12 @@ namespace api.Data
             _context.Remove(entity);
         }
 
-        public async Task<IEnumerable<Employees>> GetEmployees()
+        public async Task<PagedList<Employees>> GetEmployees(EmployeeParams employeeParams)
         {
-            var employees = await _context.Employees
-                .Include(o => o.Orders).ToListAsync();
+            var employees = _context.Employees
+                .Include(o => o.Orders);
 
-            return employees;
+            return await PagedList<Employees>.CreateAsync(employees, employeeParams.PageNumber, employeeParams.PageSize);
         }
 
         public async Task<Employees> GetEmployee(int id)

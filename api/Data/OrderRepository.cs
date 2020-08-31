@@ -40,13 +40,6 @@ namespace api.Data
             return orders;
         }
 
-        // public async Task<IEnumerable<Orders>> GetOrdersFromEmployee(int employeeId)
-        // {
-        //     var ordersFromEmployee = await _context.Orders.Where(o => o.EmployeeId == employeeId).ToListAsync();
-
-        //     return ordersFromEmployee;
-        // }
-
         public async Task<bool> SaveAll()
         {
             return await _context.SaveChangesAsync() > 0;

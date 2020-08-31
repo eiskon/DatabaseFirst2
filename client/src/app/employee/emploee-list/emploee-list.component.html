@@ -1,41 +1,73 @@
-<div class="form-container" fxLayout="column">
-  <div fxLayoutGap="20px">
-  <mat-card *ngFor="let employe of employees" fxLayout="row">
-    <div
-      fxLayout="row wrap"
-      fxFlexFill
-      fxLayoutAlign="center center"
-      fxLayoutGap="20px grid"
-    >
-      <div fxFlex="20">
-        <mat-card-header>
-          <mat-card-title>
-            {{ employe.lastName }}
-          </mat-card-title>
-          <mat-card-subtitle> 
-            {{ employe.firstName }}
-          </mat-card-subtitle>
-        </mat-card-header>
-      </div>
-      <div fxFlex="60">
-        <mat-card-content>
-          <p>
-            {{ employe.title }}
-          </p>
-          <p>
-            Country: <span>{{ employe?.country }}</span> 
-            Region: <span>{{ employe?.region }}</span>
-            City: <span>{{ employe?.city }} </span>  
-          </p>
-        </mat-card-content>
-      </div>
-      <div fxFlex="20">
-        <mat-card-actions>
-          <button *ngIf="employe.employeeId == authService.decodeToken.nameid" mat-button class="mat-raised-button" (click)="openDialogEmployeeEdit(employe.employeeId)">Edit</button>
-        </mat-card-actions>
-      </div>
+<div fxLayout="row">
+  <div
+    fxLayout="row wrap"
+    fxFlexFill
+    fxLayoutGap="20px grid"
+  >
+    <div fxFlex="90">
+      <h3>Employees</h3>
     </div>
-  </mat-card>
+  </div>
 </div>
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    <ng-container matColumnDef="lastName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Lastname
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.lastName }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="firstName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Firstname
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.firstName}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="country">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Country
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.country }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="region">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Region
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.region }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="city">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        City
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.city }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="lastUpdate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Last update
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.lastUpdate }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button *ngIf="element.employeeId == authService.decodeToken.nameid" mat-button class="mat-raised-button" (click)="openDialogEmployeeEdit(element.employeeId)">
+          <i class="material-icons">edit</i>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </table>
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+  ></mat-paginator>
 </div>
 

@@ -30,6 +30,8 @@ namespace api.Model
         public string Notes { get; set; }
         public int? ReportsTo { get; set; }
         public string PhotoPath { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime LastUpdate { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
 

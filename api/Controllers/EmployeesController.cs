@@ -10,9 +10,11 @@ using Microsoft.AspNetCore.Authorization;
 using api.Data;
 using AutoMapper;
 using api.Dtos;
+using api.Helpers;
 
 namespace api.Controllers
 {
+    [ServiceFilter(typeof(LogEmployeeUpdate))]
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
@@ -27,16 +29,18 @@ namespace api.Controllers
         }
         // GET api/employees
         [HttpGet]
-        public async Task<IActionResult> GetEmployees()
+        public async Task<IActionResult> GetEmployees([FromQuery]EmployeeParams employeeParams)
         {
-            var employees = await _repo.GetEmployees();
+            var employees = await _repo.GetEmployees(employeeParams);
 
             var employeesToReturn = _mapper.Map<IEnumerable<EmployeeForListDto>>(employees);
+
+            Response.AddPagination(employees.CurrentPage, employees.PageSize, employees.TotalCount, employees.TotalPages);
 
             return Ok(employeesToReturn);
         }
         
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetEmployee")]
         public async Task<IActionResult> GetEmployee(int id)
         {
             var employee = await _repo.GetEmployee(id);
@@ -47,7 +51,8 @@ namespace api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateEmployee(int id, EmployeeForUpdateDto employeeForUpdateDto) {
+        public async Task<IActionResult> UpdateEmployee(int id, EmployeeForUpdateDto employeeForUpdateDto) 
+        {
             if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 

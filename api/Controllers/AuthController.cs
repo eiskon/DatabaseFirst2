@@ -9,6 +9,7 @@ using api.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using AutoMapper;
 
 namespace api.Controllers
 {
@@ -18,11 +19,12 @@ namespace api.Controllers
     {
         private readonly IAuthRepository _repo;
         private readonly IConfiguration _config;
-        public AuthController(IAuthRepository repo, IConfiguration config)
+        private readonly IMapper _mapper;
+        public AuthController(IAuthRepository repo, IConfiguration config, IMapper mapper)
         {
             _config = config;
             _repo = repo;
-
+            _mapper = mapper;
         }
 
         [HttpPost("register")]
@@ -40,15 +42,13 @@ namespace api.Controllers
             if (await _repo.EmployeExists(employeeForRegisterDto.LastName))
                 return BadRequest("Employename already existst");
 
-            var employeeToCreate = new Employees
-            {
-                LastName = employeeForRegisterDto.LastName,
-                FirstName = employeeForRegisterDto.FirstName
-            };
+            var employeeToCreate = _mapper.Map<Employees>(employeeForRegisterDto);
 
             var createdEmployee = await _repo.Register(employeeToCreate, employeeForRegisterDto.Password);
 
-            return StatusCode(201);
+            var employeeToReturn = _mapper.Map<EmployeeForDetailedDto>(createdEmployee);
+
+            return CreatedAtRoute("GetEmployee", new {controller = "Employees", id = createdEmployee.EmployeeId}, employeeToReturn);
         }
 
         [HttpPost("login")]
@@ -81,9 +81,12 @@ namespace api.Controllers
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
+            var employeeToReturn = _mapper.Map<EmployeeForListDto>(employeeFromRepo);
+
             return Ok(new
             {
-                token = tokenHandler.WriteToken(token)
+                token = tokenHandler.WriteToken(token),
+                user = employeeToReturn
             });
         }
 

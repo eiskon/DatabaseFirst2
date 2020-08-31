@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 
-import { EmployeesService } from '../../_services/employees.service';
 import { Employe } from 'src/app/_models/employe';
-import { AlertifyService } from 'src/app/_services/alertify.service';
 import { ActivatedRoute } from '@angular/router';
 import { EmployeeEditDialogComponent } from '../employee-edit-dialog/employee-edit-dialog.component';
 import { AuthService } from 'src/app/_services/auth.service';
@@ -15,13 +16,30 @@ import { AuthService } from 'src/app/_services/auth.service';
 })
 export class EmploeesListComponent implements OnInit {
   employees: Employe[];
+  public dataSource: MatTableDataSource<Employe>;
+  displayedColumns: string[] = [
+    'lastName',
+    'firstName',
+    'city',
+    'region',
+    'country',
+    'lastUpdate',
+    'actions'
+  ];
 
-  constructor(private route: ActivatedRoute, public authService: AuthService,
-    public dialog: MatDialog) { }
+  constructor(private route: ActivatedRoute,
+              public authService: AuthService,
+              public dialog: MatDialog) { }
+
+    @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+    @ViewChild(MatSort, { static: true }) sort: MatSort;
+
 
   ngOnInit() {
     this.route.data.subscribe(data => {
-      this.employees = data.employees;
+      this.dataSource = new MatTableDataSource<Employe>(data.employees);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
     });
   }
 
@@ -40,6 +58,7 @@ export class EmploeesListComponent implements OnInit {
     });
 
     dialogRef.componentInstance.employeeId = id;
+
   }
 
   loggedIn() {

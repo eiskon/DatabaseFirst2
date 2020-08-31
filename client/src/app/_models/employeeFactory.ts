@@ -9,6 +9,8 @@ export class EmployeeFactory {
             title: '',
             titleOfCourtesy: '',
             hireDate: '',
+            birthDate: '',
+            lastUpdate: '',
             age: null,
             address: '',
             city: '',

@@ -7,6 +7,8 @@ export interface Employe {
     title: string;
     titleOfCourtesy: string;
     hireDate: string;
+    birthDate: string;
+    lastUpdate: string;
     age: number;
     address: string;
     city: string;

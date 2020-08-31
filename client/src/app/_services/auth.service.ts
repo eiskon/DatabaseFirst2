@@ -19,17 +19,19 @@ export class AuthService {
   login(model: any) {
     return this.http.post(this.baseUrl + 'login', model).pipe(
       map((response: any) => {
+        console.log(response);
         const user = response;
         if (user) {
           localStorage.setItem('token', user.token);
-          localStorage.setItem('employee', user.user);
+          localStorage.setItem('employee', JSON.stringify(user.user));
           this.decodeToken = this.jwtHelper.decodeToken(user.token);
+          this.currentUser = user.user;
         }
       })
     );
   }
-  register(model: any) {
-    return this.http.post(this.baseUrl + 'register', model);
+  register(employee: Employe) {
+    return this.http.post(this.baseUrl + 'register', employee);
   }
 
   loggedIn() {

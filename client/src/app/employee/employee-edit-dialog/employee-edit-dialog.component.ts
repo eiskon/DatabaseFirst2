@@ -9,6 +9,7 @@ import { AlertifyService } from 'src/app/_services/alertify.service';
 import { MatDialogRef } from '@angular/material';
 import { NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/_services/auth.service';
+import { GermanDateFormatPipe } from '../../_core/pipes/GermanDateFormat.pipe';
 
 @Component({
   selector: 'app-employee-edit-dialog',

@@ -5,19 +5,18 @@ import { JwtModule } from '@auth0/angular-jwt';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { OrdersComponent } from './orders/orders-list/orders.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
    MatCardModule, MatIconModule, MatToolbarModule, MatButtonModule, MatFormFieldModule,
    MatInputModule, MatTableModule, MatPaginatorModule, MatSelect, MatOption,
-   MatSelectModule, MatGridListModule, MatDialogModule, MatDialogContent, MatSortModule
+   MatSelectModule, MatGridListModule, MatDialogModule, MatDialogContent, MatSortModule, MatDatepickerModule, MatNativeDateModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NavComponent } from './nav/nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './_services/auth.service';
 import { OrdersService } from './_services/orders.service';
 import { CoreModule } from './_core/core.module';
@@ -28,7 +27,6 @@ import { ErrorInterceptorProvider } from './_services/error.interceptor';
 import { AlertifyService } from './_services/alertify.service';
 import { LoginModule } from './login/login.module';
 import { EmployeesModule } from './employee/employee.module';
-import { EmployeeDetailResolver } from './_resolvers/employee-detail.resolver';
 import { EmployeeListResolver } from './_resolvers/employee-list.resolver';
 import { EmployeeEditDialogComponent } from './employee/employee-edit-dialog/employee-edit-dialog.component';
 import { PreventUnsavedCanges } from './_guards/prevent-unsaved-changes.guard';
@@ -52,6 +50,7 @@ export function getToken() {
       LoginModule,
       HttpClientModule,
       AppRoutingModule,
+      ReactiveFormsModule,
       BrowserAnimationsModule,
       MatCardModule,
       MatIconModule,
@@ -59,6 +58,8 @@ export function getToken() {
       MatToolbarModule,
       MatButtonModule,
       MatFormFieldModule,
+      MatDatepickerModule,
+      MatNativeDateModule,
       MatInputModule,
       FlexLayoutModule,
       MatPaginatorModule,
