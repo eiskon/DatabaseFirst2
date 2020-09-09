@@ -17,5 +17,10 @@
   </mat-form-field>
 </div>
 <div *ngIf="!loggedIn()">
-  <button mat-button  (click)="navToLogin()" class="mat-raised-button" type="submit"><i class="material-icons">login</i>Login</button>
+  <button mat-icon-button matTooltip="Sign up" (click)="navToRegister()">
+    <mat-icon>how_to_reg</mat-icon>
+  </button>
+  <button mat-icon-button matTooltip="Log in"  (click)="navToLogin()">
+    <mat-icon>login</mat-icon>
+  </button>
 </div>

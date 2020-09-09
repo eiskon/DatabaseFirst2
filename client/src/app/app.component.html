@@ -6,27 +6,24 @@
     <h1>Northwind database (extended)</h1>
     <span class="toolbar-spacer"></span>
     <div>
-      <app-nav></app-nav> 
-
+      <app-nav></app-nav>
     </div>
   </mat-toolbar-row>
-
 </mat-toolbar>
 
-
-<mat-sidenav-container> 
+<mat-sidenav-container>
   <mat-sidenav #sidenav opened position="start">
     <mat-nav-list>
-      <h2><a mat-list-item routerLinkActive="active" [routerLink]="['/home']" (click)="sidenav.toggle()"> Home </a></h2>
-      <h2 *ngIf="loggedIn()"><a mat-list-item routerLinkActive="active" [routerLink]="['/orders']" (click)="sidenav.toggle()"> Orders </a></h2>
-      <h2 *ngIf="loggedIn()"><a mat-list-item routerLinkActive="active" [routerLink]="['/employee']" (click)="sidenav.toggle()"> Employees </a></h2>
-
+      <a mat-list-item routerLinkActive="active" [routerLink]="['/home']" (click)="sidenav.toggle()"><mat-icon>home</mat-icon> <span class="nav-caption">Home</span></a>
+      <a *ngIf="loggedIn()" mat-list-item routerLinkActive="active" [routerLink]="['/orders']"
+          (click)="sidenav.toggle()"><mat-icon>view_list</mat-icon> <span class="nav-caption">Orders</span></a>
+      <a *ngIf="loggedIn()" mat-list-item routerLinkActive="active" [routerLink]="['/employee']"
+          (click)="sidenav.toggle()"><mat-icon>account_box</mat-icon> <span class="nav-caption">Employees</span></a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <div style="height: 88vh;"> 
+    <div style="height: 88vh;">
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
-

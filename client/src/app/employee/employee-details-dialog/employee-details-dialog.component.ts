@@ -38,8 +38,6 @@ export class EmployeeDetailsDialogComponent implements OnInit {
     });
   }
 
-  save() { }
-
   close() {
     this.dialogRef.close();
   }

@@ -11,6 +11,7 @@ import { EmployeeEditDialogComponent } from '../employee/employee-edit-dialog/em
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
+
   model: any = {};
   userId: number;
 
@@ -57,5 +58,9 @@ export class NavComponent implements OnInit {
     });
 
     dialogRef.componentInstance.employeeId = id;
+  }
+
+  navToRegister() {
+    this.router.navigate(['/register']);
   }
 }

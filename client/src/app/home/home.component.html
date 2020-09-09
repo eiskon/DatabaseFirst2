@@ -1,13 +1,9 @@
 <mat-grid-list cols="1" rowHeight="3:1">
   <mat-grid-tile>
-    <div *ngIf="!registerMode" style="text-align: center;">
-      <button mat-raised-button color="accent" (click)="registerToggle()">Register</button>
-    </div>
-    <div *ngIf="registerMode">
-      <app-register-dialog (cancelRegister)="cancelRegisterMode($event)"></app-register-dialog>
+    <div style="text-align: center;">
+      <button mat-raised-button color="accent" (click)="navToRegister()">Register</button>
     </div>
   </mat-grid-tile>
   <mat-grid-tile>
-    
   </mat-grid-tile>
 </mat-grid-list>

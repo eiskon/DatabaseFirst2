@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+
 import { OrdersService } from '../../_services/orders.service';
 import { Observable } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
@@ -14,12 +16,21 @@ import { DataShareService } from 'src/app/_services/data-share.service';
   selector: 'app-orders',
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ]
 })
 export class OrdersComponent implements OnInit {
+  order: Order;
+
   ordersFromEmployee: Order[];
   orders$: Observable<Order[]>;
   public dataSource: MatTableDataSource<Order>;
-  displayedColumns: string[] = [
+  columnsToDisplay: string[] = [
     'orderId',
     'orderDate',
     'shipVia',
@@ -27,6 +38,8 @@ export class OrdersComponent implements OnInit {
     'actions',
     'employee'
   ];
+
+  expandedElement: Order | null;
 
   constructor(private ordersService: OrdersService,
               public dialog: MatDialog,
@@ -51,7 +64,7 @@ export class OrdersComponent implements OnInit {
       this.ordersFromEmployee = receivedData;
       if (this.ordersFromEmployee.length > 0) {
         this.clearDataSource();
-        this.displayedColumns = [
+        this.columnsToDisplay = [
           'orderId',
           'orderDate',
           'shipVia',
@@ -86,7 +99,7 @@ export class OrdersComponent implements OnInit {
       this.dataSource = new MatTableDataSource<Order>(res);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
-      this.displayedColumns = [
+      this.columnsToDisplay = [
         'orderId',
         'orderDate',
         'shipVia',
@@ -136,5 +149,12 @@ export class OrdersComponent implements OnInit {
     });
 
     dialogRef.componentInstance.employeeId = id;
+  }
+
+  loadOrderDetails(id: number) {
+    this.order = null;
+    this.ordersService.getOrder(id).subscribe((data: Order) => {
+      this.order = data;
+    });
   }
 }

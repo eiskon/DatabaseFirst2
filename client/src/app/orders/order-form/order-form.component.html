@@ -1,0 +1,26 @@
+<mt-card>
+  <form fxLayout="column" [formGroup]="orderForm" class="form-container" (ngSubmit)="submitForm()"
+    style="font-size: 14px">
+    <h3 fxLayoutAlign="center center">Order</h3>
+    <mt-card-content fxLayout="column">
+      <div class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px" fxLayoutGap.lt-md="0px">
+        <mat-form-field appearance="none" fxFlex>
+          <input matInput type="text" formControlName="shipVia"/>
+          <!-- <mat-error *ngIf="registerForm.get('shipVia').errors">Title of courtesy</mat-error> -->
+        </mat-form-field>
+        <mat-form-field appearance="none" fxFlex>
+          <input matInput type="text" formControlName="shipAddress" />
+          <!-- <mat-error *ngIf="registerForm.get('shipAddress').errors">Lastname is required</mat-error> -->
+        </mat-form-field>
+      </div>
+    </mt-card-content>
+
+    <mt-card-actions fxLayoutAlign="center center" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px"
+      fxLayoutGap.lt-md="0px" style="margin-top: 26px">
+      <button mat-button class="mat-raised-button" type="submit" [disabled]="!orderForm.valid" type="submit">Save</button>
+      <button mat-button class="mat-raised-button mat-primary" (click)="cancel()">
+        Cancel
+      </button>
+    </mt-card-actions>
+  </form>
+</mt-card>

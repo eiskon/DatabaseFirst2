@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using api.Helpers;
 using api.Model;
@@ -26,9 +27,14 @@ namespace api.Data
 
         public async Task<PagedList<Employees>> GetEmployees(EmployeeParams employeeParams)
         {
-            var employees = _context.Employees
-                .Include(o => o.Orders);
+            var employees = _context.Employees.Include(o => o.Orders).AsQueryable();
 
+            // employees = employees.Where(e => e.EmployeeId != employeeParams.EmpoyeeId);
+
+            if (!string.IsNullOrEmpty(employeeParams.LastName)) {
+                employees = employees.Where(e => e.LastName.Contains(employeeParams.LastName));
+            }
+            
             return await PagedList<Employees>.CreateAsync(employees, employeeParams.PageNumber, employeeParams.PageSize);
         }
 

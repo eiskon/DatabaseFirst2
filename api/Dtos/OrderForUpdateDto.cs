@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace api.Dtos
 {
-    public class OrdersForDetailedDto
+    public class OrderForUpdateDto
     {
         public int OrderId { get; set; }
         public string CustomerId { get; set; }
@@ -19,8 +19,6 @@ namespace api.Dtos
         public string ShipRegion { get; set; }
         public string ShipPostalCode { get; set; }
         public string ShipCountry { get; set; }
-        public ICollection<OrderDetailsDto> OrderDetails { get; set; }
-        public EmployeesForOrderListDto Employee { get; set; }
-    
+        // public ICollection<OrderDetailsDto> OrderDetails { get; set; }
     }
 }

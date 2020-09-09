@@ -14,7 +14,7 @@ using api.Helpers;
 
 namespace api.Controllers
 {
-    [ServiceFilter(typeof(LogEmployeeUpdate))]
+    // [ServiceFilter(typeof(LogEmployeeUpdate))]
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
@@ -31,6 +31,8 @@ namespace api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetEmployees([FromQuery]EmployeeParams employeeParams)
         {
+            // var currentEmployeeId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
             var employees = await _repo.GetEmployees(employeeParams);
 
             var employeesToReturn = _mapper.Map<IEnumerable<EmployeeForListDto>>(employees);
@@ -64,7 +66,6 @@ namespace api.Controllers
                 return NoContent();
 
             throw new Exception($"Updating employee {id} faled on save");
-
         }
     }
 }

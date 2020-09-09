@@ -36,21 +36,14 @@ namespace api.Controllers
             return Ok(ordersToReturn);
         }
 
-        // [HttpGet("{id}")]
-        // public async Task<IActionResult> GetOrdersFromEmployee(int employeeId)
-        // {
-        //     var ordersFromEmployee = await _repo.GetOrdersFromEmployee(employeeId);
+        [HttpGet("{id}", Name = "GetOrder")]
+        public async Task<IActionResult> GetOrder(int id)
+        {
+            var order = await _repo.GetOrder(id);
 
-        //     var ordersToReturn = _mapper.Map<IEnumerable<OrdersForListDto>>(ordersFromEmployee);
+            var orderToReturn = _mapper.Map<OrdersForDetailedDto>(order);
 
-        //     return Ok(ordersToReturn);
-        // }
-        // [HttpGet("{id}")]
-        // public async Task<IActionResult> GetOrder(int id)
-        // {
-        //     var order = await _context.Orders.FirstOrDefaultAsync(x => x.OrderId == id);
-
-        //     return Ok(order);
-        // }
+            return Ok(orderToReturn);
+        }
     }
-}
+}   

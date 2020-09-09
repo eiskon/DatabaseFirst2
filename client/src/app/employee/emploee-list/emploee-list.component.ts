@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 
@@ -8,6 +7,12 @@ import { Employe } from 'src/app/_models/employe';
 import { ActivatedRoute } from '@angular/router';
 import { EmployeeEditDialogComponent } from '../employee-edit-dialog/employee-edit-dialog.component';
 import { AuthService } from 'src/app/_services/auth.service';
+import { Pagination } from 'src/app/_models/pagination';
+import { EmployeesService } from 'src/app/_services/employees.service';
+import { PaginatedResult } from 'src/app/_models/paginatedResult';
+import { AlertifyService } from 'src/app/_services/alertify.service';
+import { Subject } from 'rxjs';
+import { filter, debounceTime, distinctUntilChanged, tap, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-emploee-list',
@@ -26,21 +31,70 @@ export class EmploeesListComponent implements OnInit {
     'lastUpdate',
     'actions'
   ];
+  pagination: Pagination;
+  employeeParams: any = {};
+  keyUp$ = new Subject<string>();
+  isLoading = false;
+  searchTerm = '';
 
   constructor(private route: ActivatedRoute,
               public authService: AuthService,
+              private employeesService: EmployeesService,
+              private alertify: AlertifyService,
               public dialog: MatDialog) { }
 
-    @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-    @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
 
   ngOnInit() {
     this.route.data.subscribe(data => {
-      this.dataSource = new MatTableDataSource<Employe>(data.employees);
+      this.dataSource = new MatTableDataSource<Employe>(data.employees.result);
       this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
+      this.pagination = data.employees.pagination;
+      this.employees = data.employees.result;
     });
+    this.employeeParams.lastName = '';
+
+    this.keyUp$.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      tap(() => this.isLoading = true),
+      switchMap(searchTerm => this.employeesService.getEmployees(this.pagination.currentPage, this.pagination.itemsPerPage, searchTerm)),
+      tap(() => this.isLoading = false)
+    ).subscribe((data) => {
+      this.dataSource = new MatTableDataSource<Employe>(data.result);
+      this.dataSource.sort = this.sort;
+      this.pagination = data.pagination;
+      this.employees = data.result;
+    });
+  }
+
+  pageChanged(event: any): void {
+    this.pagination.currentPage = event.pageIndex + 1;
+    this.pagination.itemsPerPage = event.pageSize;
+    this.keyUp$.subscribe(term => {
+      this.searchTerm = term;
+    });
+    this.loadEmployees();
+  }
+
+  resetFilters() {
+    this.employeeParams.lastName = '';
+    this.loadEmployees();
+  }
+
+  loadEmployees() {
+    this.employeesService.getEmployees(this.pagination.currentPage, this.pagination.itemsPerPage, this.searchTerm)
+      .subscribe((res: PaginatedResult<Employe[]>) => {
+        this.employees = res.result;
+        this.dataSource = new MatTableDataSource<Employe>(res.result);
+        this.dataSource.sort = this.sort;
+        this.pagination = res.pagination;
+      },
+        error => {
+          this.alertify.error(error);
+        }
+      );
   }
 
   openDialogEmployeeEdit(id: number) {

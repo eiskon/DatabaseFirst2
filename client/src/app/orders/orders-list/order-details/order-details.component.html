@@ -1,0 +1,82 @@
+<div>
+  <mat-card class="details-card">
+    <div fxLayout="row wrap" fxFlexFill fxLayoutAlign="center center" fxLayoutGap="20px grid">
+      <mat-card-title>
+
+        <div fxFlex="100">
+          <h5>Order {{ order.orderId }} </h5>
+        </div>
+
+      </mat-card-title>
+    </div>
+    <mat-card-content>
+      <div fxLayout="row wrap" fxFlexFill fxLayoutAlign="center center" fxLayoutGap="20px grid">
+        <div fxFlex="20">
+          <mat-form-field appearance="none" fxFlex>
+            <mat-label>Customer</mat-label>
+            <input disabled [ngModel]="order.customerId" matInput />
+          </mat-form-field>
+        </div>
+        <div fxFlex="30">
+          <mat-form-field appearance="none" fxFlex>
+            <mat-label>Ship country</mat-label>
+            <input disabled [ngModel]="order.shipCountry" matInput />
+          </mat-form-field>
+        </div>
+        <div fxFlex="50">
+          <mat-form-field appearance="none" fxFlex>
+            <mat-label>Ship name</mat-label>
+            <input disabled [ngModel]="order.shipName" matInput />
+          </mat-form-field>
+        </div>
+        <div fxFlex="100">
+          <h6 fxLayoutAlign="center center">Order positions</h6>
+        </div>
+        <div fxFlex="100">
+          <table mat-table [dataSource]="dataSource" fxFlex>
+            <ng-container matColumnDef="productId">
+              <mat-header-cell *matHeaderCellDef>
+                Product Id
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element">{{ element.productId }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="productName">
+              <mat-header-cell *matHeaderCellDef>
+                Name
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element">{{ element.product.productName }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="quantity">
+              <mat-header-cell *matHeaderCellDef>
+                Quantity
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element">{{ element.quantity }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="unitPrice">
+              <mat-header-cell *matHeaderCellDef>
+                Unit price
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element">{{ element.unitPrice }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="discount">
+              <mat-header-cell *matHeaderCellDef>
+                Discount
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element">{{ element.discount }}</mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: columnsToDisplay"></mat-row>
+          </table>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="openDialog(order.orderId)">
+        Edit</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

@@ -1,4 +1,5 @@
 import { Employe } from './employe';
+
 export interface Order {
     orderId: number;
     customerId: number;
@@ -15,4 +16,12 @@ export interface Order {
     shipPostalCode: string;
     shipCountry: string;
     employees: Employe;
+    orderDetails: OrderDetails;
+}
+
+export interface OrderDetails {
+    productId: number;
+    UnitPrice: number;
+    quantity: number;
+    discount: number;
 }

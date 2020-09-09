@@ -41,6 +41,7 @@ namespace api
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddCors();
             services.AddAutoMapper(typeof(EmployeesRepository).Assembly);
+            services.AddAutoMapper(typeof(OrderRepository).Assembly);
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IEmployeesRepository, EmployeesRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
@@ -56,7 +57,7 @@ namespace api
                     ValidateAudience = false
                 };
             });
-            services.AddScoped<LogEmployeeUpdate>();
+            // services.AddScoped<LogEmployeeUpdate>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

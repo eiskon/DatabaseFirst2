@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace api.Helpers
 {
+    // Diese Klasse wurde getested, ist zur zeit in Startup.cs geaktiviert
     public class LogEmployeeUpdate : IAsyncActionFilter
     {
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)

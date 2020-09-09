@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { EmploeesListComponent } from './emploee-list/emploee-list.component';
 
 import { EmployeesRoutingModule } from './employee-routing.module';
-import { MatCardModule, MatDialogModule, MatPaginatorModule, MatTableModule, MatSortModule } from '@angular/material';
+import { MatCardModule, MatDialogModule, MatPaginatorModule, MatTableModule, MatSortModule, MatIconModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LayoutModule } from '@angular/cdk/layout';
 import { EmployeeListResolver } from '../_resolvers/employee-list.resolver';
@@ -22,7 +22,6 @@ import { CoreModule } from '../_core/core.module';
     CommonModule,
     CoreModule,
     EmployeesRoutingModule,
-    MatCardModule,
     MatPaginatorModule,
     MatTableModule,
     MatSortModule,
@@ -33,7 +32,8 @@ import { CoreModule } from '../_core/core.module';
     MatInputModule,
     MatFormFieldModule,
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule
   ],
   entryComponents: [
     EmployeeEditDialogComponent

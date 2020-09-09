@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 
-import { ActivatedRoute, Router } from '@angular/router';
-
 import { Employe } from 'src/app/_models/employe';
 import { EmployeeFactory } from '../../_models/EmployeeFactory';
 import { EmployeesService } from 'src/app/_services/employees.service';
@@ -28,7 +26,6 @@ export class EmployeeEditDialogComponent implements OnInit {
   }
 
   constructor(private employeeService: EmployeesService,
-              private activatedRoute: ActivatedRoute,
               private alertify: AlertifyService,
               private authService: AuthService,
               public dialogRef: MatDialogRef<EmployeeEditDialogComponent>) {}

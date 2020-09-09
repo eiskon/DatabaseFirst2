@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions; 
 using System.Threading.Tasks;
 using api.Model;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +28,7 @@ namespace api.Data
         public async Task<Orders> GetOrder(int id)
         {
              var order = await _context.Orders
+                .Include("OrderDetails.Product")
                 .FirstOrDefaultAsync(o => o.OrderId == id);
 
             return order;
@@ -35,6 +37,7 @@ namespace api.Data
         public async Task<IEnumerable<Orders>> GetOrders()
         {
             var orders = await _context.Orders
+            // .Include("OrderDetails.Product")
                 .Include(e => e.Employee).ToListAsync();
 
             return orders;

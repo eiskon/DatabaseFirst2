@@ -4,6 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { LoginDialogComponent } from './login/components/login-dialog/login-dialog.component';
 import { EmployeeDetailResolver } from './_resolvers/employee-detail.resolver';
+import { RegisterDialogComponent } from './register-dialog/register-dialog.component';
 
 
 const routes: Routes = [
@@ -14,6 +15,10 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
+  },
+  {
+    path: 'register',
+    component: RegisterDialogComponent,
   },
   {
     path: 'orders',
