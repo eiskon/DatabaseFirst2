@@ -6,7 +6,7 @@ import { EmployeeEditDialogComponent } from '../employee/employee-edit-dialog/em
 @Injectable({
     providedIn: 'root'
   })
-  export class PreventUnsavedCanges implements CanDeactivate<EmployeeEditDialogComponent> {
+  export class PreventUnsavedChanges implements CanDeactivate<EmployeeEditDialogComponent> {
     canDeactivate(component: EmployeeEditDialogComponent) {
         if (component.editForm.dirty) {
             return confirm('Are you sure you want to continue? Any unsaved changes wilbe lost');

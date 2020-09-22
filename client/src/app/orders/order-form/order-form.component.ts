@@ -23,7 +23,7 @@ export class OrderFormComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     this.initForm();
-    this.setFormValues(this.book);
+    // this.setFormValues(this.order);
   }
 
   private initForm() {

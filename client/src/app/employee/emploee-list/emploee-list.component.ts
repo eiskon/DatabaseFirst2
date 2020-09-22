@@ -86,7 +86,6 @@ export class EmploeesListComponent implements OnInit {
   loadEmployees() {
     this.employeesService.getEmployees(this.pagination.currentPage, this.pagination.itemsPerPage, this.searchTerm)
       .subscribe((res: PaginatedResult<Employe[]>) => {
-        this.employees = res.result;
         this.dataSource = new MatTableDataSource<Employe>(res.result);
         this.dataSource.sort = this.sort;
         this.pagination = res.pagination;

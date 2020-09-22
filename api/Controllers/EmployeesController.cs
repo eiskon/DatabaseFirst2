@@ -4,8 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using api.Model;
 using Microsoft.AspNetCore.Authorization;
 using api.Data;
 using AutoMapper;
@@ -31,8 +29,6 @@ namespace api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetEmployees([FromQuery]EmployeeParams employeeParams)
         {
-            // var currentEmployeeId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-
             var employees = await _repo.GetEmployees(employeeParams);
 
             var employeesToReturn = _mapper.Map<IEnumerable<EmployeeForListDto>>(employees);

@@ -32,7 +32,6 @@ export class RegisterDialogComponent implements OnInit {
     this.registerForm = this.fb.group({
       lastname: ['', Validators.required],
       firstname: ['', Validators.required],
-      // title: ['', Validators.required],
       titleOfCourtesy: ['', Validators.required],
       birthDate: [null, Validators.required],
       postalCode: ['', Validators.required],

@@ -5,7 +5,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeesService } from 'src/app/_services/employees.service';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { DataShareService } from 'src/app/_services/data-share.service';
-import { Order } from '../../_models/order';
 
 @Component({
   selector: 'app-employee-details-dialog',
@@ -41,11 +40,4 @@ export class EmployeeDetailsDialogComponent implements OnInit {
   close() {
     this.dialogRef.close();
   }
-
-  passData(orders: Order[]){
-    this.dataShareService.sendDataToOtherComponent(orders);
-    this.close();
-  }
-
-
 }

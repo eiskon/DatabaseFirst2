@@ -14,10 +14,6 @@ export class EmployeesService {
 
   constructor(private http: HttpClient) { }
 
-  // getEmployees(): Observable<Employe[]> {
-  //   return this.http.get<Employe[]>(`${this.baseUrl}employees`);
-  // }
-
   getEmployees(page?, itemsPerPage?, lastName?): Observable<PaginatedResult<Employe[]>> {
     const paginatedResult: PaginatedResult<Employe[]> = new PaginatedResult<Employe[]>();
 
@@ -28,7 +24,7 @@ export class EmployeesService {
       params = params.append('pageSize', itemsPerPage);
     }
 
-    if(lastName != null) {
+    if (lastName != null) {
       params = params.append('lastName', lastName);
     }
 

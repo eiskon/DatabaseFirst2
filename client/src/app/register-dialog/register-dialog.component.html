@@ -13,10 +13,6 @@
             </mat-select>
             <mat-error *ngIf="registerForm.get('titleOfCourtesy').errors">Title of courtesy is required</mat-error>
           </mat-form-field>
-          <!-- <mat-form-field appearance="none" fxFlex>
-        <input matInput type="text" formControlName="titleOfCourtesy" placeholder="Title of courtesy" />
-        <mat-error *ngIf="registerForm.get('titleOfCourtesy').errors">Title of courtesy</mat-error>
-      </mat-form-field> -->
           <mat-form-field appearance="none" fxFlex>
             <input matInput type="text" formControlName="lastname" placeholder="Lastname" />
             <mat-error *ngIf="registerForm.get('lastname').errors">Lastname is required</mat-error>
@@ -94,8 +90,6 @@
         </button>
       </mat-dialog-actions>
     </form>
-    <!-- <p>Form value: {{ registerForm.value | json }}</p> -->
-    <!-- <p>Form status: {{ registerForm.status | json }}</p> -->
   </mat-grid-tile>
   <mat-grid-tile>
 

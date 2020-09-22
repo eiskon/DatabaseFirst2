@@ -18,6 +18,7 @@ export class EmployeeEditDialogComponent implements OnInit {
   @ViewChild('editForm') editForm: NgForm;
   employee = EmployeeFactory.empty();
   employeeId: number;
+  
   @HostListener('window:beforeunload', ['$event'])
   uloadNotification($event: any) {
     if ($event.editForm.dirty) {

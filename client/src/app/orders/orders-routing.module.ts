@@ -3,13 +3,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { OrdersComponent } from './orders-list/orders.component';
 import { OrderEditDialogComponent } from './order-edit-dialog/order-edit-dialog.component';
 import { AuthGuard } from '../_guards/auth.guard';
-import { EmployeeDetailResolver } from '../_resolvers/employee-detail.resolver';
+import { OrderListResolver } from '../_resolvers/order-list.resolver';
 
 
 const routes: Routes = [
   {
     path: 'orders',
-    component: OrdersComponent
+    component: OrdersComponent, resolve: {orders: OrderListResolver}
   },
   {
     path: 'orders/:orderId',

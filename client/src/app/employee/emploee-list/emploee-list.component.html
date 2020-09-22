@@ -8,8 +8,8 @@
         <mat-form-field appearance="none">
           <div fxLayout="row">
             <div fxFlex="90">
-              <input matInput type="text" name="searchLastName" [(ngModel)]="searchTerm" placeholder="Lastname" (keyup)="keyUp$.next($event.target.value)"
-                autocomplete="off">
+              <input matInput type="text" name="searchLastName" [(ngModel)]="searchTerm" placeholder="Lastname"
+                (keyup)="keyUp$.next($event.target.value)" autocomplete="off">
             </div>
             <div fxFlex="10">
               <mat-icon matSuffix>search</mat-icon>
@@ -61,7 +61,7 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header>
         Last update
       </mat-header-cell>
-      <mat-cell *matCellDef="let element">{{ element.lastUpdate }}</mat-cell>
+      <mat-cell *matCellDef="let element">{{ element.lastUpdate | GermanDateTimeFormat }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="actions">

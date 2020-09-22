@@ -30,7 +30,8 @@ import { LoginModule } from './login/login.module';
 import { EmployeesModule } from './employee/employee.module';
 import { EmployeeListResolver } from './_resolvers/employee-list.resolver';
 import { EmployeeEditDialogComponent } from './employee/employee-edit-dialog/employee-edit-dialog.component';
-import { PreventUnsavedCanges } from './_guards/prevent-unsaved-changes.guard';
+import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
+import { OrderListResolver } from './_resolvers/order-list.resolver';
 
 export function getToken() {
    return localStorage.getItem('token');
@@ -85,7 +86,8 @@ export function getToken() {
       OrdersService,
       AlertifyService,
       EmployeeListResolver,
-      PreventUnsavedCanges,
+      OrderListResolver,
+      PreventUnsavedChanges,
       ErrorInterceptorProvider
    ],
    bootstrap: [

@@ -1,61 +1,13 @@
-<h5>Order Id: {{ orderId }}</h5>
+<div fxLayout="column">
+  <div fxLayoutAlign="center center">
+    <h1 mat-dialog-title>This feature is still under development</h1>
+  </div>
+  <mat-dialog-content>
 
-<form
-  class="order-edit-form"
-  #orderEditForm="ngForm"
-  (ngSubmit)="save()"
-  class="form-container" 
->
-<mat-dialog-content>
-
-  <mat-form-field appearance="none">
-    <mat-label>Customer Id</mat-label>
-    <input
-      matInput
-      type="text"
-      name="customerId"
-      required
-      [ngModel]="order?.customerId"
-    />
-  </mat-form-field>
-
-  <mat-form-field appearance="none">
-    <mat-label>Ship address</mat-label>
-    <input
-      matInput
-      type="text"
-      name="shipAddress"
-      required
-      [ngModel]="order?.shipAddress"
-    />
-  </mat-form-field>
-
-  <mat-form-field appearance="none">
-    <mat-label>Ship city</mat-label>
-    <input
-      matInput
-      type="text"
-      name="shipCity"
-      required
-      [ngModel]="order?.shipCity"
-    />
-  </mat-form-field>
-
-  <mat-form-field appearance="none">
-    <mat-label>Ship name</mat-label>
-    <input
-      matInput
-      type="text"
-      name="shipName"
-      required
-      [ngModel]="order?.shipName"
-    />
-  </mat-form-field>
-
-</mat-dialog-content>
-
-<mat-dialog-actions>
-  <button class="mat-raised-button" (click)="close()">Close</button>
-  <button class="mat-raised-button mat-primary" (click)="save()">Save</button>
-</mat-dialog-actions>
-</form>
+  </mat-dialog-content>
+  <div fxLayoutAlign="center center">
+    <mat-dialog-actions>
+      <button class="mat-raised-button" (click)="close()">Close</button>
+    </mat-dialog-actions>
+  </div>
+</div>

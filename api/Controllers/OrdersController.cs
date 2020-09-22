@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using api.Model;
 using Microsoft.AspNetCore.Authorization;
 using api.Data;
 using AutoMapper;
 using api.Dtos;
+using api.Helpers;
 
 namespace api.Controllers
 {
@@ -27,11 +26,13 @@ namespace api.Controllers
 
         // GET api/orders
         [HttpGet]
-        public async Task<IActionResult> GetOrders()
+        public async Task<IActionResult> GetOrders([FromQuery]OrderParams orderParams)
         {
-            var orders = await _repo.GetOrders();
+            var orders = await _repo.GetOrders(orderParams);
 
             var ordersToReturn = _mapper.Map<IEnumerable<OrdersForListDto>>(orders);
+
+            Response.AddPagination(orders.CurrentPage, orders.PageSize, orders.TotalCount, orders.TotalPages);
 
             return Ok(ordersToReturn);
         }

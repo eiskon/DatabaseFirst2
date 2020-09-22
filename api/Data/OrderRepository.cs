@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions; 
 using System.Threading.Tasks;
+using api.Helpers;
 using api.Model;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,13 +34,17 @@ namespace api.Data
             return order;
         }
 
-        public async Task<IEnumerable<Orders>> GetOrders()
+        public async Task<PagedList<Orders>> GetOrders(OrderParams orderParams)
         {
-            var orders = await _context.Orders
-            // .Include("OrderDetails.Product")
-                .Include(e => e.Employee).ToListAsync();
+            var orders =  _context.Orders.FromSqlRaw($"SELECT * FROM getOrders()").Include(e => e.Employee).AsQueryable();
 
-            return orders;
+            // var orders = _context.Orders.Include(e => e.Employee).AsQueryable();
+
+            if (!orderParams.EmployeeId.Equals(0)) {
+                orders = orders.Where(o => o.EmployeeId == orderParams.EmployeeId);
+            }
+
+            return await PagedList<Orders>.CreateAsync(orders, orderParams.PageNumber, orderParams.PageSize);
         }
 
         public async Task<bool> SaveAll()

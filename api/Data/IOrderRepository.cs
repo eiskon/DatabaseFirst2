@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using api.Model;
+using api.Helpers;
 
 namespace api.Data
 {
@@ -9,10 +10,7 @@ namespace api.Data
          void Add<T>(T entity) where T: class;
          void Delete<T>(T entity) where T: class;
          Task<bool> SaveAll();
-        Task<IEnumerable<Orders>> GetOrders();
-        // Task<IEnumerable<Orders>> GetOrdersFromEmployee(int employeeId);
+        Task<PagedList<Orders>> GetOrders(OrderParams orderParams);
         Task<Orders> GetOrder(int id);
-        // Task<Orders>  UpdateOrder(Orders order);
-         
     }
 }

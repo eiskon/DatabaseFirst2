@@ -15,11 +15,12 @@ export class NavComponent implements OnInit {
   model: any = {};
   userId: number;
 
-  constructor(public authService: AuthService, private alertify: AlertifyService, private router: Router,
-    public dialog: MatDialog) {}
+  constructor(public authService: AuthService,
+              private alertify: AlertifyService,
+              private router: Router,
+              public dialog: MatDialog) {}
 
   ngOnInit() {
-    // this.userId = this.authService.decodeToken.nameid;
   }
 
   login() {
