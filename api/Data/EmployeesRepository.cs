@@ -42,7 +42,7 @@ namespace api.Data
 
             var result = _context.Orders.Where(filter);
 
-            // var ordersToReturn = _mapper.Map<EmployeeForDetailedDto>(result);
+            // var ordersToReturn = _mapper.Map<IEnumerable<EmployeeForDetailedDto>>(result);
 
             return result.Any() == false
                     ? OperationResult<IEnumerable<Orders>>.Failure(ResultType.NotFound, new { EmployeeId = employeeId, Orders = "not found" })
