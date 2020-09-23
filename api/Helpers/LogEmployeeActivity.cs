@@ -17,9 +17,9 @@ namespace api.Helpers
             var employeeId = int.Parse(resultContext.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
             var repo = resultContext.HttpContext.RequestServices.GetService<IEmployeesRepository>();
-            var employee = await repo.GetEmployee(employeeId);
-            employee.LastUpdate = DateTime.Now;
-            await repo.SaveAll();
+            var employee = repo.GetEmployee(employeeId);
+            employee.Result.LastUpdate = DateTime.Now;
+            repo.SaveAll();
         }
     }
 }
