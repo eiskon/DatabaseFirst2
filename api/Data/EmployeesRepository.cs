@@ -22,19 +22,10 @@ namespace api.Data
             _context = context;
             _mapper = mapper;
         }
-        public void Add<T>(T entity) where T : class
+        // is not called from frontend on - was only tested with Postmann
+        public async Task<OperationResult<IEnumerable<Orders>>> GetOrdersByEmployeeId(int employeeId, Func<Orders, bool> filter)  // #######OK##########
         {
-            _context.Add(entity);
-        }
-
-        public void Delete<T>(T entity) where T : class
-        {
-            _context.Remove(entity);
-        }
-    ///////////////////////////////////////////////////////////////
-        public OperationResult<IEnumerable<Orders>> GetOrdersByEmployeeId(int employeeId, Func<Orders, bool> filter)
-        {
-            var ordersResult = GetEmployee(employeeId);
+            var ordersResult = await GetEmployee(employeeId);
             if (ordersResult.IsSuccess == false)
             {
                 return OperationResult<IEnumerable<Orders>>.Failure(ResultType.NotFound, new { EmployeeId = employeeId, Orders = "not found" });
@@ -49,36 +40,40 @@ namespace api.Data
                     : OperationResult<IEnumerable<Orders>>.Success(result);
         }
 
-        public OperationResult<Employees> GetEmployee(int employeeId)
+        public async Task<OperationResult<Employees>> GetEmployee(int employeeId) // ##########OK#######
         {
             var employee = _context.Employees.FirstOrDefaultAsync(x => x.EmployeeId == employeeId);
-            return employee == null
+
+            return await employee == null
                     ? OperationResult<Employees>.Failure(ResultType.NotFound, new { EmployeeId = employeeId })
                     :
                      OperationResult<Employees>.Success(employee.Result);
         }
-    //////////////////////////////////////////////////////////////
-        public async Task<PagedList<Employees>> GetEmployees(EmployeeParams employeeParams)
-        {
-            var employees = _context.Employees.Include(o => o.Orders).AsQueryable();
 
-            // employees = employees.Where(e => e.EmployeeId != employeeParams.EmpoyeeId);
+        public async Task<OperationResult<Employees>> Update(int employeeId, EmployeeForUpdateDto employeeForUpdateDto) // ##########OK#######
+        {
+            var employeeFromRepo = await GetEmployee(employeeId);
+
+            var employeeToReturn =_mapper.Map(employeeForUpdateDto, employeeFromRepo.Result);
+
+            if (SaveAll())
+                return OperationResult<Employees>.Success(employeeToReturn);
+
+            return OperationResult<Employees>.Failure(ResultType.NotFound, new {EmployeeForUpdateDto = employeeForUpdateDto});
+        }
+    //////////////////////////////////////////////////////////////
+        public async Task<OperationResult<PagedList<Employees>>> GetEmployees(EmployeeParams employeeParams)
+        {
+            var employees =  _context.Employees.Include(o => o.Orders).AsQueryable();
 
             if (!string.IsNullOrEmpty(employeeParams.LastName)) {
                 employees = employees.Where(e => e.LastName.Contains(employeeParams.LastName));
             }
             
-            return await PagedList<Employees>.CreateAsync(employees, employeeParams.PageNumber, employeeParams.PageSize);
+            var result = await PagedList<Employees>.CreateAsync(employees, employeeParams.PageNumber, employeeParams.PageSize);
+
+            return OperationResult<PagedList<Employees>>.Success(result);
         }
-
-        // public async Task<Employees> GetEmployee(int id)
-        // {
-        //     var employee = await _context.Employees
-        //         .Include(o => o.Orders)
-        //         .FirstOrDefaultAsync(e => e.EmployeeId == id);
-
-        //     return employee;
-        // }
 
         public bool SaveAll()
         {

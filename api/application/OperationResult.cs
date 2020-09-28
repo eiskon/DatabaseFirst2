@@ -1,11 +1,9 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.application
 {
-    public class OperationResult<T>
+    public class OperationResult<T> 
         where T : class
     {
         public T Result { get; set; }
@@ -13,8 +11,8 @@ namespace api.application
         public ResultType ResultType { get; set; }
         public object Input { get; set; }
 
-        private OperationResult()
-        { }
+        // private OperationResult()
+        // { }
 
         public static OperationResult<T> Success(T result)
             => new OperationResult<T>

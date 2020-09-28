@@ -16,8 +16,8 @@ namespace api.Controllers
 {
     // [ServiceFilter(typeof(LogEmployeeUpdate))]
     [Authorize]
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class EmployeesController : ControllerBase
     {
         private readonly IEmployeesRepository _repo;
@@ -29,13 +29,16 @@ namespace api.Controllers
         }
         // GET api/employees
         [HttpGet]
-        public async Task<IActionResult> GetEmployees([FromQuery]EmployeeParams employeeParams)
+        public async Task<ActionResult<IEnumerable<Employees>>> GetEmployees([FromQuery]EmployeeParams employeeParams)
         {
             var employees = await _repo.GetEmployees(employeeParams);
 
-            var employeesToReturn = _mapper.Map<IEnumerable<EmployeeForListDto>>(employees);
+            var employeesToReturn = _mapper.Map<IEnumerable<EmployeeForListDto>>(employees.Result);
 
-            Response.AddPagination(employees.CurrentPage, employees.PageSize, employees.TotalCount, employees.TotalPages);
+            Response.AddPagination(employees.Result.CurrentPage, 
+                                employees.Result.PageSize, 
+                                employees.Result.TotalCount, 
+                                employees.Result.TotalPages);
 
             return Ok(employeesToReturn);
         }
@@ -51,82 +54,25 @@ namespace api.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateEmployee(int id, EmployeeForUpdateDto employeeForUpdateDto) 
+        public ActionResult<IEnumerable<Employees>> UpdateEmployee(int? id, EmployeeForUpdateDto employeeForUpdateDto)
         {
             if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            var employeeFromRepo = _repo.GetEmployee(id);
-
-            _mapper.Map(employeeForUpdateDto, employeeFromRepo);
-
-            if (_repo.SaveAll())
-                return NoContent();
-
-            throw new Exception($"Updating employee {id} faled on save");
-        }
-
-        /////////////////////////////////////////////////////////////////
-         [HttpPost("{employeeId}/Orders/batch")]
-         public ActionResult<IEnumerable<Orders>> CreateBatch(int employeeId, [FromBody] IEnumerable<Orders> inputs)
-        {
-            var employeeResult = EmployeeUseCases.GetEmployee(employeeId);
-            if (employeeResult.IsSuccess == false)
-            {
-                return OperationResult<IEnumerable<Orders>>.Failure(ResultType.NotFound, new { EmployeeId = employeeId })
-                        .ToActionResult();
-            }
-
-            var employee = employeeResult.Result;
-            var result = inputs.Select(x => EmployeeUseCases.AddToOrders(employee, x).Result);
-
-            return OperationResult<IEnumerable<Orders>>.Success(result).ToActionResult();
+            return _repo.Update(id.Value, employeeForUpdateDto).ToActionResult();
         }
 
         [HttpGet("{employeeId}/Orders/GetAll")]
-        public ActionResult<IEnumerable<Orders>> GetAll(int employeeId, [FromQuery]string shipPostalCode)
+        public  ActionResult<IEnumerable<Orders>> GetAll(int? employeeId, string shipPostalCode)
         {
-            Func<Orders, bool> filter = order => order.EmployeeId == employeeId;
+            Func<Orders, bool> filter = order => order.EmployeeId == employeeId.Value;
             if (string.IsNullOrWhiteSpace(shipPostalCode) == false)
             {
-                filter = order => order.EmployeeId == employeeId 
+                filter = order => order.EmployeeId == employeeId.Value 
                         && order.ShipPostalCode.Contains(shipPostalCode);
             }
 
-
-            // var ordersToReturn = _mapper.Map<EmployeeForDetailedDto>(filter);
-
-            return _repo.GetOrdersByEmployeeId(employeeId, filter).ToActionResult();
-        }
-
-           [HttpGet("{employeeId}/Orders/{id}")]
-        public ActionResult<Orders> GetbyId(int employeeId, int id)
-        {
-            var orderResult = EmployeeUseCases.GetOrders(employeeId, x => x.EmployeeId == id);
-
-            if (orderResult.IsSuccess)
-            {
-                return OperationResult<Orders>.Success(orderResult.Result.Single()).ToActionResult();
-            }
-            else
-            {
-                return OperationResult<Orders>.Failure(ResultType.NotFound, new 
-                {
-                    OrderId = id, EmployeeId = employeeId
-                }).ToActionResult();
-            }
-        }
-
-        [HttpPut("{employeeId}/Orders")]
-        public ActionResult<Orders> Update(int employeeId, [FromBody]Orders order)
-        {
-            return EmployeeUseCases.Update(employeeId, order).ToActionResult();
-        }
-
-        [HttpDelete("{employeeId}/Orders/{id}")]
-        public ActionResult<Orders> Delete(int employeeId, int id)
-        {
-            return EmployeeUseCases.Delete(employeeId, id).ToActionResult();
+            return _repo.GetOrdersByEmployeeId(employeeId.Value, filter).ToActionResult();
         }
     }
 }

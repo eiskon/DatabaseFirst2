@@ -36,9 +36,7 @@ namespace api.Data
 
         public async Task<PagedList<Orders>> GetOrders(OrderParams orderParams)
         {
-            var orders =  _context.Orders.FromSqlRaw($"SELECT * FROM getOrders()").Include(e => e.Employee).AsQueryable();
-
-            // var orders = _context.Orders.Include(e => e.Employee).AsQueryable();
+            var orders = _context.Orders.Include(e => e.Employee).AsQueryable();
 
             if (!orderParams.EmployeeId.Equals(0)) {
                 orders = orders.Where(o => o.EmployeeId == orderParams.EmployeeId);
