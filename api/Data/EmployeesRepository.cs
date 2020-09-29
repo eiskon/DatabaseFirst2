@@ -29,8 +29,6 @@ namespace api.Data
         {
             var employees = _context.Employees.Include(o => o.Orders).AsQueryable();
 
-            // employees = employees.Where(e => e.EmployeeId != employeeParams.EmpoyeeId);
-
             if (!string.IsNullOrEmpty(employeeParams.LastName)) {
                 employees = employees.Where(e => e.LastName.Contains(employeeParams.LastName));
             }

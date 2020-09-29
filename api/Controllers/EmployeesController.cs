@@ -9,13 +9,14 @@ using api.Data;
 using AutoMapper;
 using api.Dtos;
 using api.Helpers;
+using api.Filters;
 
 namespace api.Controllers
 {
     // [ServiceFilter(typeof(LogEmployeeUpdate))]
     [Authorize]
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class EmployeesController : ControllerBase
     {
         private readonly IEmployeesRepository _repo;
@@ -39,29 +40,30 @@ namespace api.Controllers
         }
         
         [HttpGet("{id}", Name = "GetEmployee")]
-        public async Task<IActionResult> GetEmployee(int id)
+        public async Task<IActionResult> GetEmployee(int? id)
         {
-            var employee = await _repo.GetEmployee(id);
+            var employee = await _repo.GetEmployee(id.Value);
 
             var employeeToReturn = _mapper.Map<EmployeeForDetailedDto>(employee);
 
             return Ok(employeeToReturn);
         }
 
+        [Profile]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateEmployee(int id, EmployeeForUpdateDto employeeForUpdateDto) 
+        public async Task<IActionResult> UpdateEmployee(int? id, EmployeeForUpdateDto employeeForUpdateDto) 
         {
             if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            var employeeFromRepo = await _repo.GetEmployee(id);
+            var employeeFromRepo = await _repo.GetEmployee(id.Value);
 
             _mapper.Map(employeeForUpdateDto, employeeFromRepo);
 
             if (await _repo.SaveAll())
                 return NoContent();
 
-            throw new Exception($"Updating employee {id} faled on save");
+            throw new Exception($"Updating employee {id.Value} faled on save");
         }
     }
 }

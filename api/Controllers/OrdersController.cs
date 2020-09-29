@@ -8,12 +8,13 @@ using api.Data;
 using AutoMapper;
 using api.Dtos;
 using api.Helpers;
+using api.Filters;
 
 namespace api.Controllers
 {
     [Authorize]
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class OrdersController : ControllerBase
     {
         private readonly IOrderRepository _repo;
